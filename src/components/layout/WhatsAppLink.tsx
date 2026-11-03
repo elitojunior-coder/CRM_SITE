@@ -43,6 +43,7 @@ type WhatsAppLinkProps = {
   originOverride?: string;
   messageOverride?: string;
   onClick?: () => void;
+  "aria-label"?: string;
 };
 
 export function WhatsAppLink({
@@ -53,6 +54,7 @@ export function WhatsAppLink({
   originOverride,
   messageOverride,
   onClick,
+  "aria-label": ariaLabel,
 }: WhatsAppLinkProps) {
   const pathname = usePathname();
   const pageOrigin = originOverride ?? PAGE_ORIGINS[pathname] ?? `página ${pathname}`;
@@ -71,6 +73,7 @@ export function WhatsAppLink({
       rel="noopener noreferrer"
       className={cn(className)}
       onClick={onClick}
+      aria-label={ariaLabel}
       suppressHydrationWarning
     >
       {children}

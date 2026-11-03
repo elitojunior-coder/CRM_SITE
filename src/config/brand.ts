@@ -42,12 +42,18 @@ export const brand = {
     sameAs: [] as string[],
   },
 
-  /** Cor de acento principal (não é verde WhatsApp). Secundária usada na página /estilo. */
+  /** Acento laranja-brasa — CTAs e estados ativos. Petróleo para faixas de destaque. */
   accent: {
-    primary: "#B8472A",
-    primaryHover: "#9A3A22",
-    secondary: "#1A5F6B",
-    secondaryHover: "#144A54",
+    primary: "#FF5B2E",
+    primaryHover: "#E84E24",
+    secondary: "#0E3B43",
+    secondaryHover: "#0A2E34",
+  },
+
+  surfaces: {
+    dark: "#0B0D0E",
+    warm: "#F5F2EB",
+    petroleum: "#0E3B43",
   },
 
   flags: {

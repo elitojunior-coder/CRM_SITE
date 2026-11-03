@@ -11,8 +11,9 @@ import { WhatsAppLink } from "@/components/layout/WhatsAppLink";
 import { cn } from "@/lib/cn";
 
 const navLinks = [
+  { href: "#antes-depois", label: "Antes e depois" },
   { href: "#como-funciona", label: "Como funciona" },
-  { href: "#funcionalidades", label: "Funcionalidades" },
+  { href: "#calculadora", label: "Calculadora" },
   { href: "#segmentos", label: "Segmentos" },
   { href: "#faq", label: "Dúvidas" },
 ];
@@ -51,6 +52,7 @@ export function Header() {
         <div className="hidden items-center gap-2 md:flex">
           <WhatsAppLink
             id="whatsapp-vendas-header"
+            data-header-secondary
             className={cn(
               "inline-flex items-center justify-center rounded-md border border-line bg-surface-raised px-4 py-2 text-sm font-medium text-ink transition-colors hover:border-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
             )}

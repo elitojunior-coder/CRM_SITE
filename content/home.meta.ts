@@ -1,7 +1,7 @@
 import { parseHomeFrontmatter } from "../src/lib/home-content";
 
 export const homeMeta = parseHomeFrontmatter({
-  title: "Atendimento e vendas pelo WhatsApp, 24 horas, com CRM integrado",
+  title: "Quem responde primeiro, vende — IA no WhatsApp e no site",
   description:
-    "Cliente sem resposta em minutos compra do concorrente. Agentes de IA no WhatsApp qualificam, entendem áudio, agendam e passam para sua equipe com resumo — sem trocar de número.",
+    "Agentes de IA atendem em segundos no WhatsApp e no site: entendem áudio, qualificam, agendam e passam para sua equipe com resumo. Sem trocar de número.",
 });

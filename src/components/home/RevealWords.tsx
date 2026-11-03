@@ -1,0 +1,58 @@
+"use client";
+
+import { motion, useReducedMotion } from "motion/react";
+import { useMemo } from "react";
+import { cn } from "@/lib/cn";
+
+type RevealWordsProps = {
+  text: string;
+  as?: "h2" | "h3" | "p";
+  className?: string;
+  italicWords?: string[];
+};
+
+export function RevealWords({
+  text,
+  as: Tag = "h2",
+  className,
+  italicWords = [],
+}: RevealWordsProps) {
+  const reduceMotion = useReducedMotion();
+  const words = useMemo(
+    () => text.split(/\s+/).filter(Boolean),
+    [text],
+  );
+
+  if (reduceMotion) {
+    return <Tag className={className}>{text}</Tag>;
+  }
+
+  return (
+    <Tag className={className} aria-label={text}>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden className="inline">
+        {words.map((word, i) => {
+          const clean = word.replace(/[.,!?;:]/g, "");
+          const emphasis = italicWords.some(
+            (w) => w.toLowerCase() === clean.toLowerCase(),
+          );
+          return (
+            <motion.span
+              key={`${word}-${i}`}
+              className={cn(
+                "mr-[0.28em] inline-block",
+                emphasis && "italic",
+              )}
+              initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ delay: i * 0.04, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {word}
+            </motion.span>
+          );
+        })}
+      </span>
+    </Tag>
+  );
+}

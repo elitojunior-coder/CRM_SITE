@@ -41,10 +41,13 @@ const manrope = Manrope({
   display: "swap",
 });
 
+const siteUrl =
+  !brand.product.domain.startsWith("[")
+    ? `https://${brand.product.domain}`
+    : (process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:3200");
+
 export const metadata: Metadata = {
-  metadataBase: brand.product.domain.startsWith("[")
-    ? undefined
-    : new URL(`https://${brand.product.domain}`),
+  metadataBase: new URL(siteUrl),
   title: {
     default: brand.product.name,
     template: `%s · ${brand.product.name}`,

@@ -6,7 +6,7 @@ type SectionProps = {
   children: ReactNode;
   className?: string;
   containerClassName?: string;
-  tone?: "default" | "muted" | "accent-band";
+  tone?: "default" | "muted" | "accent-band" | "dark" | "petroleum" | "warm";
   ariaLabelledBy?: string;
 };
 
@@ -25,7 +25,12 @@ export function Section({
       className={cn(
         "py-16 md:py-24",
         tone === "muted" && "bg-surface-muted",
+        tone === "warm" && "bg-surface",
         tone === "accent-band" && "bg-accent/5",
+        tone === "dark" &&
+          "grain-overlay bg-surface-dark text-ink-on-dark [&_.text-ink]:text-ink-on-dark [&_.text-ink-muted]:text-ink-muted-on-dark [&_.text-accent]:text-accent",
+        tone === "petroleum" &&
+          "bg-surface-petroleum text-ink-on-dark [&_.text-ink]:text-ink-on-dark [&_.text-ink-muted]:text-ink-muted-on-dark",
         className,
       )}
     >

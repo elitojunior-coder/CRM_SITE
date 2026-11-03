@@ -1,160 +1,45 @@
-import { brand } from "@/config/brand";
-import { Futuro } from "@/components/Futuro";
-import { FunnelCard } from "@/components/product/FunnelCard";
-import { SellerSummary } from "@/components/product/SellerSummary";
-import { WhatsAppConversationCompact } from "@/components/product/WhatsAppConversation";
-import { CtaFinal } from "@/components/sections/CtaFinal";
+import { HomeNavTheme } from "@/components/home/HomeNavTheme";
+import { HomeSmoothScroll } from "@/components/home/HomeSmoothScroll";
+import { HeroPremium } from "@/components/home/HeroPremium";
+import { HomeBelowFold } from "@/components/home/HomeBelowFold";
+import { MarqueeSegments } from "@/components/home/MarqueeSegments";
+import { SecurityStrip } from "@/components/home/SecurityStrip";
+import { CtaFinalDark } from "@/components/home/CtaFinalDark";
 import { FAQ } from "@/components/sections/FAQ";
-import { FeatureSplit } from "@/components/sections/FeatureSplit";
-import { Hero } from "@/components/sections/Hero";
 import { Section, SectionHeader } from "@/components/sections/Section";
-import { SegmentosGrid } from "@/components/sections/SegmentosGrid";
-import { Steps } from "@/components/sections/Steps";
+import { Futuro } from "@/components/Futuro";
 
-<Section containerClassName="pt-10 md:pt-16">
-  <Hero
-    painLine="Quando a mensagem fica no vácuo, o cliente fecha com quem responde primeiro."
-    title={
-      <>
-        Seu WhatsApp vira atendimento <em className="not-italic text-accent">24h</em>{" "}
-        que qualifica, agenda e não deixa lead escapar.
-      </>
-    }
-    lead={`${brand.product.name} une agentes de IA, CRM e funil no mesmo fluxo do WhatsApp da sua empresa. O cliente recebe resposta na hora — por texto ou áudio — e sua equipe entra só quando faz diferença, já com contexto.`}
-    visual={
-      <div className="grid gap-4 lg:max-w-md">
-        <WhatsAppConversationCompact />
-        <SellerSummary className="hidden md:block" />
-      </div>
-    }
-  />
+<HomeNavTheme />
+<HomeSmoothScroll />
+
+<Section tone="dark" containerClassName="pt-12 pb-20 md:pt-20 md:pb-28" id="demonstracao">
+  <HeroPremium />
 </Section>
 
-<Section id="demonstracao" tone="muted">
-  <SectionHeader
-    id="demo-conversa"
-    eyebrow="Na prática"
-    title="Veja a conversa acontecer — do áudio ao agendamento."
-    lead="Não é slide de promessa: é o fluxo real que seu cliente vive no WhatsApp, com qualificação e handoff para o vendedor."
-    align="wide"
-  />
-  <div className="grid items-start gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-    <WhatsAppConversationCompact />
-    <div className="space-y-4">
-      <FunnelCard />
-      <SellerSummary />
-    </div>
-  </div>
+<Section tone="warm" containerClassName="py-20 md:py-28">
+  <HomeBelowFold />
 </Section>
 
-<Section id="como-funciona-passos">
-  <SectionHeader
-    eyebrow="Como funciona"
-    title="Três passos entre a mensagem e a venda."
-    lead="Simples de operar: conecta seu WhatsApp, define regras da sua equipe e acompanha tudo no CRM."
-  />
-  <Steps
-    steps={[
-      {
-        title: "Conecte o número que você já usa",
-        description:
-          "Mantém seu WhatsApp Business. Configuramos filas, horários e quando a IA responde sozinha ou chama um humano.",
-      },
-      {
-        title: "A IA atende, qualifica e registra",
-        description:
-          "Responde na hora, transcreve áudio, faz perguntas objetivas e grava cada lead no funil com etiquetas e próximo passo.",
-      },
-      {
-        title: "Humano entra com resumo pronto",
-        description:
-          "Quando vale a pena, o vendedor recebe alerta com histórico, intenção e horário sugerido — sem reler dezenas de mensagens.",
-      },
-    ]}
-  />
-</Section>
+<MarqueeSegments />
 
-<Section id="funcionalidades" tone="muted">
-  <SectionHeader
-    title="Funcionalidades que sustentam o atendimento — não só enfeite."
-    lead="Cada bloco abaixo responde a uma pergunta que todo dono de negócio faz antes de contratar."
-  />
-  <FeatureSplit
-    id="agente-ia"
-    answer="A IA vai falar besteira com meu cliente?"
-    title="Agente treinado no seu tom e nas suas regras"
-    body="Você define o que pode ser respondido automaticamente, o que exige aprovação humana e quais informações nunca devem ser inventadas. Respostas seguem roteiros e base de conhecimento sua — não improviso solto."
-    visual={<WhatsAppConversationCompact />}
-  />
-  <FeatureSplit
-    reverse
-    answer="E se o cliente mandar áudio?"
-    title="Entende áudio e imagem como mensagem de verdade"
-    body="Áudios são transcritos e tratados no contexto da conversa. Fotos de documentos, produtos ou defeitos entram no fluxo com a mesma lógica de qualificação — sem pedir para o cliente digitar tudo de novo."
-    visual={<SellerSummary />}
-  />
-  <FeatureSplit
-    answer="Como sei quem está quente?"
-    title="Funil de vendas ligado ao WhatsApp"
-    body="Cada conversa vira card no funil: etapa, responsável, próximo passo e temperatura. Sua equipe enxerga pipeline real, não planilha paralela."
-    visual={<FunnelCard />}
-  />
-  <FeatureSplit
-    reverse
-    answer="Dá para disparar campanha sem spam?"
-    title="Campanhas com lista e consentimento"
-    body="Segmentos saem do próprio CRM. Você controla frequência, mensagem e opt-out. Ideal para reativação, lembrete de consulta ou pós-venda — sempre alinhado à política do WhatsApp."
-    visual={
-      <div className="rounded-xl border border-line bg-surface p-6 text-sm text-ink-muted">
-        <p className="font-medium text-ink">Campanha · Reativação</p>
-        <p className="mt-2">
-          Lista: clientes sem resposta há 30 dias · envio terça 10h · CTA agendar
-          demo.
-        </p>
-        <p className="mt-4 tabular-nums text-xs text-ink-subtle">
-          Métricas reais após ativação: [DADO REAL]
-        </p>
-      </div>
-    }
-  />
-</Section>
-
-<Section id="segmentos">
-  <SectionHeader
-    title="Para qualquer negócio que vende pelo WhatsApp."
-    lead="O fluxo muda conforme o segmento; a lógica é a mesma: responder rápido, qualificar bem e passar limpo para o humano."
-  />
-  <SegmentosGrid />
-</Section>
-
-<Section tone="accent-band" containerClassName="py-10 md:py-12">
-  <div className="max-w-3xl">
-    <h2 className="font-display text-2xl text-ink md:text-3xl">
-      Seus dados ficam isolados e tratados conforme a LGPD.
-    </h2>
-    <p className="mt-3 text-pretty leading-relaxed text-ink-muted">
-      Ambiente multi-cliente com separação lógica, criptografia em trânsito,
-      registro de acesso do suporte e canal direto com o encarregado de dados (
-      {brand.lgpd.encarregadoNome}, {brand.lgpd.encarregadoEmail}). Detalhes na
-      página de segurança e nas políticas legais.
-    </p>
-  </div>
+<Section tone="petroleum" containerClassName="py-16 md:py-20">
+  <SecurityStrip />
 </Section>
 
 <Futuro flag="mostrarDepoimentos">
   <Section tone="muted">
     <SectionHeader
       title="Quem usa no dia a dia."
-      lead="Depoimentos reais de clientes — ativados quando houver autorização de publicação."
+      lead="Depoimentos reais — ativados quando houver autorização de publicação."
     />
     <p className="text-sm text-ink-muted">[DADO REAL]</p>
   </Section>
 </Futuro>
 
-<Section id="faq">
+<Section id="faq" tone="warm">
   <SectionHeader
     title="Perguntas que travam a decisão — respondidas de frente."
-    lead="Se faltar algum detalhe técnico da sua operação, agende uma demo e levamos o cenário da sua empresa."
+    lead="Falta detalhe da sua operação? Agende uma demo e montamos o cenário da sua empresa."
   />
   <FAQ
     items={[
@@ -187,9 +72,6 @@ import { Steps } from "@/components/sections/Steps";
   />
 </Section>
 
-<Section tone="muted">
-  <CtaFinal
-    title="Mostre seu fluxo de WhatsApp — a gente simula ao vivo."
-    description="Agende uma demonstração ou fale agora com vendas. Levamos exemplos do seu segmento e respondemos se encaixa no tamanho da sua operação."
-  />
+<Section tone="dark" containerClassName="py-20 md:py-28">
+  <CtaFinalDark />
 </Section>

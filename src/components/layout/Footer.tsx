@@ -20,7 +20,7 @@ export function Footer() {
           <p className="mt-2 max-w-sm text-sm leading-relaxed text-ink-muted">
             {brand.product.slogan}
           </p>
-          <p className="mt-6 text-xs leading-relaxed text-ink-subtle">
+          <p className="mt-6 text-xs leading-relaxed text-ink-muted">
             {brand.company.razaoSocial}
             <br />
             CNPJ {brand.company.cnpj}
@@ -35,7 +35,7 @@ export function Footer() {
             <li>
               Vendas:{" "}
               <a
-                className="text-ink underline-offset-4 hover:text-accent hover:underline"
+                className="text-ink underline underline-offset-4 hover:text-accent"
                 href={`mailto:${brand.contact.emailComercial}`}
               >
                 {brand.contact.emailComercial}
@@ -44,7 +44,7 @@ export function Footer() {
             <li>
               Suporte:{" "}
               <a
-                className="text-ink underline-offset-4 hover:text-accent hover:underline"
+                className="text-ink underline underline-offset-4 hover:text-accent"
                 href={`mailto:${brand.contact.emailSuporte}`}
               >
                 {brand.contact.emailSuporte}
@@ -54,7 +54,7 @@ export function Footer() {
             <li>
               Encarregado de dados: {brand.lgpd.encarregadoNome} ·{" "}
               <a
-                className="text-ink underline-offset-4 hover:text-accent hover:underline"
+                className="text-ink underline underline-offset-4 hover:text-accent"
                 href={`mailto:${brand.lgpd.encarregadoEmail}`}
               >
                 {brand.lgpd.encarregadoEmail}
@@ -78,7 +78,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-line/80">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-5 text-xs text-ink-subtle md:flex-row md:items-center md:justify-between md:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-5 text-xs text-ink-muted md:flex-row md:items-center md:justify-between md:px-8">
           <p>
             © <CurrentYear /> {brand.company.razaoSocial}. Todos os direitos reservados.
           </p>
