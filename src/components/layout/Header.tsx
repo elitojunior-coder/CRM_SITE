@@ -11,6 +11,7 @@ import { WhatsAppLink } from "@/components/layout/WhatsAppLink";
 import { cn } from "@/lib/cn";
 
 const navLinks = [
+  { href: "#plataforma", label: "Plataforma" },
   { href: "#antes-depois", label: "Antes e depois" },
   { href: "#como-funciona", label: "Como funciona" },
   { href: "#calculadora", label: "Calculadora" },
@@ -26,7 +27,7 @@ export function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-surface/90 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 md:px-8">
+      <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-4 px-5 md:px-8">
         <Link
           href="/"
           className="font-display text-lg text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
@@ -35,7 +36,7 @@ export function Header() {
         </Link>
 
         <nav
-          className="hidden items-center gap-8 md:flex"
+          className="hidden items-center gap-6 lg:flex lg:gap-8"
           aria-label="Principal"
         >
           {navLinks.map((link) => (
@@ -49,7 +50,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           <WhatsAppLink
             id="whatsapp-vendas-header"
             data-header-secondary
@@ -64,13 +65,13 @@ export function Header() {
 
         <Dialog.Root open={open} onOpenChange={setOpen}>
           <Dialog.Trigger asChild>
-            <IconButton className="md:hidden" aria-label="Abrir menu">
+            <IconButton className="header-menu-trigger lg:hidden" aria-label="Abrir menu">
               <List size={22} weight="regular" />
             </IconButton>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay className="fixed inset-0 z-50 bg-ink/40 md:hidden" />
-            <Dialog.Content className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,20rem)] flex-col bg-surface p-5 shadow-xl focus:outline-none md:hidden">
+            <Dialog.Overlay className="fixed inset-0 z-50 bg-ink/40 lg:hidden" />
+            <Dialog.Content className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,20rem)] flex-col bg-surface p-5 shadow-xl focus:outline-none lg:hidden">
               <div className="mb-6 flex items-center justify-between">
                 <Dialog.Title className="font-display text-lg">
                   Menu

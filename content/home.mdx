@@ -1,7 +1,6 @@
-import { HomeNavTheme } from "@/components/home/HomeNavTheme";
-import { HomeSmoothScroll } from "@/components/home/HomeSmoothScroll";
+import { HomeClientShell } from "@/components/home/HomeClientShell";
 import { HeroPremium } from "@/components/home/HeroPremium";
-import { HomeBelowFold } from "@/components/home/HomeBelowFold";
+import { HomeBelowFoldLazy } from "@/components/home/HomeBelowFoldLazy";
 import { MarqueeSegments } from "@/components/home/MarqueeSegments";
 import { SecurityStrip } from "@/components/home/SecurityStrip";
 import { CtaFinalDark } from "@/components/home/CtaFinalDark";
@@ -9,15 +8,14 @@ import { FAQ } from "@/components/sections/FAQ";
 import { Section, SectionHeader } from "@/components/sections/Section";
 import { Futuro } from "@/components/Futuro";
 
-<HomeNavTheme />
-<HomeSmoothScroll />
+<HomeClientShell />
 
-<Section tone="dark" containerClassName="pt-12 pb-20 md:pt-20 md:pb-28" id="demonstracao">
+<Section tone="dark" containerClassName="max-w-none px-0 pt-12 pb-20 md:pt-20 md:pb-28" id="demonstracao">
   <HeroPremium />
 </Section>
 
 <Section tone="warm" containerClassName="py-20 md:py-28">
-  <HomeBelowFold />
+  <HomeBelowFoldLazy />
 </Section>
 
 <MarqueeSegments />

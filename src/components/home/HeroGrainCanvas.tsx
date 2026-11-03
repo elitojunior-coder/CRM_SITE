@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useReducedMotion } from "motion/react";
 
 const HeroGrainCanvasInner = dynamic(
   () =>
@@ -13,12 +12,12 @@ const HeroGrainCanvasInner = dynamic(
 
 /** WebGL leve — fallback CSS em `.grain-overlay` se falhar ou com reduced motion. */
 export function HeroGrainCanvas() {
-  const reduceMotion = useReducedMotion();
-  if (reduceMotion) return null;
   return (
-    <HeroGrainCanvasInner
-      className="pointer-events-none absolute inset-0 -z-10 opacity-60"
+    <div
+      className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-[100vw] -translate-x-1/2 overflow-hidden motion-reduce:hidden"
       aria-hidden
-    />
+    >
+      <HeroGrainCanvasInner className="hero-shader-fade h-full w-full opacity-70" />
+    </div>
   );
 }

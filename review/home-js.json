@@ -1,66 +1,72 @@
 {
-  "totalBytes": 5265780,
-  "totalKiB": 5142,
+  "totalBytes": 230677,
+  "totalKiB": 225,
+  "method": "PerformanceResourceTiming.transferSize (deduped, initial load window)",
+  "windowMs": 2547,
   "scripts": [
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/node_modules_1ng9rkegok_4r._.js",
-      "bytes": 1170320
+      "url": "chunks/2-3bcc782c_pu.js",
+      "bytes": 72080
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/1daa_next_dist_compiled_react-dom_cjs_react-dom-client_development_0mp0cp_t-ezj9.js",
-      "bytes": 1051902
+      "url": "chunks/2pc3t2kcz0fju.js",
+      "bytes": 48061
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/node_modules_next_dist_client_1ohys4wzsw--s._.js",
-      "bytes": 909814
+      "url": "chunks/107i8ab907rvg.js",
+      "bytes": 45819
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/node_modules_next_dist_compiled_next-devtools_index_090k2jmam7qwg.js",
-      "bytes": 886646
+      "url": "chunks/0mjndkhehr889.js",
+      "bytes": 14422
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/node_modules_1ab5tsdsbe6ko._.js",
-      "bytes": 318538
+      "url": "chunks/2tm6ixy6ytj45.js",
+      "bytes": 9971
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_164kp-67asdr9._.js",
-      "bytes": 180538
+      "url": "chunks/2uy6962aj_g7c.js",
+      "bytes": 9243
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js",
-      "bytes": 169034
+      "url": "chunks/3xdcyw-933dod.js",
+      "bytes": 8089
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/node_modules_next_dist_compiled_1amofcmz--cdp._.js",
-      "bytes": 144350
+      "url": "chunks/2j1qdg6u05qhu.js",
+      "bytes": 5747
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/turbopack-_1nhx3glkvfrg4._.js",
-      "bytes": 112011
+      "url": "chunks/turbopack-2u1d16houkiyo.js",
+      "bytes": 4205
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/_06z29vooa-dhl._.js",
-      "bytes": 77108
+      "url": "chunks/1qjrsp_gj1rjz.js",
+      "bytes": 3903
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/node_modules_next_dist_20wefz_f1k6jn._.js",
-      "bytes": 62486
+      "url": "chunks/0srfas8q_ire8.js",
+      "bytes": 2655
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/src_components_1t0vea_r2mwt6._.js",
-      "bytes": 60937
+      "url": "chunks/310vm2bl3xxpt.js",
+      "bytes": 2270
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/src_0f0zmmd5z5xzd._.js",
-      "bytes": 46777
+      "url": "chunks/0f1nfs1d-qi21.js",
+      "bytes": 1540
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/_1e9ge5i0id2bp._.js",
-      "bytes": 30629
+      "url": "chunks/1jt_k52a0jn87.js",
+      "bytes": 1072
     },
     {
-      "url": "http://127.0.0.1:3200/_next/static/chunks/1q96_modules_next_dist_compiled_react-dom_cjs_react-dom_development_1sqry0_53krp4.js",
-      "bytes": 16685
+      "url": "chunks/0j461zh8bxf28.js",
+      "bytes": 917
+    },
+    {
+      "url": "chunks/2tu8se37e-rp1.js",
+      "bytes": 683
     }
   ]
 }

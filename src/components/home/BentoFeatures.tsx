@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { useCallback } from "react";
-import { RevealWords } from "@/components/home/RevealWords";
+import { HomeTitle } from "@/components/home/HomeTitle";
 import { cn } from "@/lib/cn";
 
 const items = [
@@ -10,31 +10,37 @@ const items = [
     title: "Áudio virou texto",
     desc: "O cliente fala; a IA entende e continua o fluxo.",
     key: "audio",
+    span: "lg:col-span-2 lg:row-span-2",
   },
   {
     title: "Card no funil",
     desc: "Cada conversa vira etapa, dono e próximo passo.",
     key: "funnel",
+    span: "lg:col-span-1 lg:row-span-2",
   },
   {
     title: "Resumo pronto",
     desc: "Handoff com intenção, objeções e horário sugerido.",
     key: "summary",
+    span: "",
   },
   {
     title: "Campanha certa",
     desc: "Enviado, entregue, lido — sem disparo cego.",
     key: "campaign",
+    span: "",
   },
   {
     title: "Chat no site",
     desc: "Mesmo agente no WhatsApp e no widget do site.",
     key: "chat",
+    span: "",
   },
   {
     title: "LGPD de verdade",
     desc: "Isolamento, trilha de acesso e encarregado nomeado.",
     key: "lgpd",
+    span: "",
   },
 ] as const;
 
@@ -44,63 +50,113 @@ function MiniVisual({ kind }: { kind: (typeof items)[number]["key"] }) {
   switch (kind) {
     case "audio":
       return (
-        <div className="flex items-end gap-1" aria-hidden>
-          {[3, 5, 4, 6, 3].map((h, i) => (
+        <div
+          className="flex h-[min(60%,140px)] min-h-[100px] items-end justify-center gap-1.5 rounded-xl bg-surface p-4"
+          aria-hidden
+        >
+          {[3, 5, 4, 7, 4, 6, 3].map((h, i) => (
             <motion.span
               key={i}
-              className="w-1 rounded-full bg-accent"
-              animate={reduceMotion ? undefined : { height: [h, h + 8, h] }}
+              className="w-1.5 origin-bottom rounded-full bg-accent"
+              animate={
+                reduceMotion ? undefined : { scaleY: [0.4, 1, 0.55, 1.1, 0.4] }
+              }
               transition={{
                 repeat: Infinity,
-                duration: 1,
-                delay: i * 0.1,
+                duration: 1.2,
+                delay: i * 0.07,
               }}
-              style={{ height: h * 4 }}
+              style={{ height: h * 6 }}
             />
           ))}
         </div>
       );
     case "funnel":
       return (
-        <motion.div
-          className="h-2 w-24 rounded-full bg-accent/30"
-          animate={reduceMotion ? undefined : { x: [0, 40, 0] }}
-          transition={{ repeat: Infinity, duration: 2.5 }}
-        />
+        <div className="relative h-[min(60%,140px)] min-h-[100px] overflow-hidden rounded-xl bg-surface p-4">
+          <div className="flex h-full gap-2">
+            {["Novo", "Qualif.", "Prop."].map((c) => (
+              <div
+                key={c}
+                className="flex-1 rounded-md border border-dashed border-line bg-surface-raised/80 p-1 text-[9px] text-ink-subtle"
+              >
+                {c}
+              </div>
+            ))}
+          </div>
+          <motion.div
+            className="absolute bottom-6 left-6 right-6 rounded-md border border-line bg-white px-2 py-2 text-[10px] shadow-md"
+            animate={reduceMotion ? undefined : { x: [0, 48, 96, 48, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+          >
+            Lead · R$ 8k
+          </motion.div>
+        </div>
       );
     case "summary":
       return (
-        <motion.p
-          className="text-xs text-ink-muted"
-          initial={{ width: 0 }}
-          animate={reduceMotion ? undefined : { width: "100%" }}
-          transition={{ repeat: Infinity, duration: 3, repeatDelay: 1 }}
-          style={{ overflow: "hidden", whiteSpace: "nowrap" }}
-        >
-          Cliente quer orçamento hoje…
-        </motion.p>
+        <div className="h-[min(60%,120px)] min-h-[88px] overflow-hidden rounded-xl bg-surface p-4">
+          <motion.p
+            className="text-sm leading-snug text-ink-muted"
+            animate={
+              reduceMotion
+                ? undefined
+                : { opacity: [0.4, 1, 1], clipPath: ["inset(0 100% 0 0)", "inset(0 0 0 0)", "inset(0 0 0 0)"] }
+            }
+            transition={{ repeat: Infinity, duration: 4, repeatDelay: 0.5 }}
+          >
+            Cliente quer orçamento hoje; prefere 16h; objeção: prazo de entrega.
+          </motion.p>
+        </div>
       );
     case "campaign":
       return (
-        <div className="flex gap-2 text-[10px] text-ink-muted">
-          <span>enviado</span>
-          <span>lido</span>
+        <div className="flex h-[min(60%,120px)] min-h-[88px] flex-col justify-center gap-2 rounded-xl bg-surface p-4 text-[11px]">
+          {["enviado", "entregue", "lido"].map((step, i) => (
+            <motion.div
+              key={step}
+              className="flex items-center gap-2 text-ink-muted"
+              animate={
+                reduceMotion ? undefined : { opacity: i <= 1 ? 1 : [0.3, 1, 0.3] }
+              }
+              transition={{ repeat: Infinity, duration: 2, delay: i * 0.3 }}
+            >
+              <span className="text-accent">✓</span>
+              <span className="tabular-nums">{step}</span>
+            </motion.div>
+          ))}
         </div>
       );
     case "chat":
       return (
-        <motion.div
-          className="rounded-lg border border-line bg-surface px-2 py-1 text-xs"
-          initial={reduceMotion ? false : { scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ repeat: Infinity, repeatDelay: 2, duration: 0.4 }}
-        >
-          Olá! Posso ajudar?
-        </motion.div>
+        <div className="relative h-[min(60%,120px)] min-h-[88px] rounded-xl bg-surface p-4">
+          <motion.div
+            className="absolute bottom-4 right-4 max-w-[85%] rounded-xl border border-line bg-white px-3 py-2 text-xs shadow-lg"
+            initial={reduceMotion ? false : { opacity: 0, y: 8, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ repeat: Infinity, repeatDelay: 2.5, duration: 0.45 }}
+          >
+            Olá! Posso ajudar com orçamento?
+          </motion.div>
+        </div>
       );
     default:
       return (
-        <div className="size-10 rounded-full border-2 border-accent/40" aria-hidden />
+        <div className="relative h-[min(60%,120px)] min-h-[88px] overflow-hidden rounded-xl bg-surface p-4">
+          <div className="flex size-12 items-center justify-center rounded-full border-2 border-accent/50 text-lg">
+            🛡
+          </div>
+          <motion.div
+            className="absolute bottom-3 left-4 right-4 h-1 rounded-full bg-line"
+            aria-hidden
+          >
+            <motion.span
+              className="block h-full rounded-full bg-accent/60"
+              animate={reduceMotion ? undefined : { width: ["0%", "100%"] }}
+              transition={{ repeat: Infinity, duration: 3 }}
+            />
+          </motion.div>
+        </div>
       );
   }
 }
@@ -115,24 +171,27 @@ export function BentoFeatures() {
 
   return (
     <div id="funcionalidades">
-      <RevealWords
+      <HomeTitle
+        as="h2"
         text="Tudo que sustenta venda — não enfeite."
-        className="font-display text-3xl text-ink md:text-5xl"
-        italicWords={["venda"]}
+        accentWords={["venda"]}
+        className="text-3xl md:text-5xl"
       />
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item, i) => (
+      <div className="mt-10 grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-4">
+        {items.map((item) => (
           <article
             key={item.key}
             onMouseMove={onMove}
             className={cn(
-              "spotlight-card rounded-2xl border border-line bg-surface-raised p-5 transition-shadow hover:shadow-md",
-              i === 0 && "sm:col-span-2 lg:col-span-1",
+              "card-premium spotlight-card flex flex-col rounded-2xl p-5 transition-shadow hover:shadow-lg focus-within:shadow-lg",
+              item.span,
             )}
           >
             <MiniVisual kind={item.key} />
-            <h3 className="mt-4 font-display text-xl text-ink">{item.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+            <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-ink">
+              {item.title}
+            </h3>
+            <p className="mt-2 text-base leading-relaxed text-ink-muted">
               {item.desc}
             </p>
           </article>

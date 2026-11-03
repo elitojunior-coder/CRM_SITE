@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { segmentos, type SegmentoId } from "@/lib/segmentos";
-import { RevealWords } from "@/components/home/RevealWords";
+import { HomeTitle } from "@/components/home/HomeTitle";
 import { cn } from "@/lib/cn";
 
 export function SegmentSelector() {
@@ -13,10 +13,11 @@ export function SegmentSelector() {
 
   return (
     <div id="segmentos">
-      <RevealWords
+      <HomeTitle
+        as="h2"
         text="O fluxo muda por segmento. A lógica é a mesma."
-        className="font-display text-3xl text-ink md:text-5xl"
-        italicWords={["segmento"]}
+        accentWords={["segmento"]}
+        className="text-3xl md:text-5xl"
       />
       <div
         className="mt-8 flex flex-wrap gap-2"
@@ -42,6 +43,7 @@ export function SegmentSelector() {
         ))}
       </div>
 
+      <div className="mt-10 min-h-[420px] lg:min-h-[380px]">
       <AnimatePresence mode="wait">
         <motion.div
           key={active}
@@ -49,7 +51,7 @@ export function SegmentSelector() {
           animate={{ opacity: 1, y: 0 }}
           exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
           transition={{ duration: 0.35 }}
-          className="mt-10 grid gap-8 lg:grid-cols-2"
+          className="grid gap-8 lg:grid-cols-2"
           role="tabpanel"
         >
           <div>
@@ -88,6 +90,7 @@ export function SegmentSelector() {
           </div>
         </motion.div>
       </AnimatePresence>
+      </div>
     </div>
   );
 }

@@ -2,6 +2,14 @@
 
 import dynamic from "next/dynamic";
 
+const PlatformShowcase = dynamic(
+  () =>
+    import("@/components/home/PlatformShowcase").then((m) => ({
+      default: m.PlatformShowcase,
+    })),
+  { ssr: false },
+);
+
 const BeforeAfter = dynamic(
   () =>
     import("@/components/home/BeforeAfter").then((m) => ({
@@ -45,7 +53,10 @@ const BentoFeatures = dynamic(
 export function HomeBelowFold() {
   return (
     <>
-      <BeforeAfter />
+      <PlatformShowcase />
+      <div className="mt-24">
+        <BeforeAfter />
+      </div>
       <div className="mt-24">
         <ScrollStory />
       </div>

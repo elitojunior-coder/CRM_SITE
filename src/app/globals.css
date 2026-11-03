@@ -218,11 +218,58 @@ body {
 }
 
 [data-home-nav] header [data-header-secondary] {
-  border-color: var(--line-on-dark);
-  background: rgb(255 255 255 / 0.06);
+  border-color: rgb(245 242 235 / 0.55);
+  background: transparent;
   color: var(--ink-on-dark);
+  box-shadow: inset 0 0 0 1px rgb(245 242 235 / 0.35);
 }
 
 [data-home-nav] header [data-header-secondary]:hover {
-  background: rgb(255 255 255 / 0.1);
+  background: rgb(255 255 255 / 0.08);
+  border-color: rgb(245 242 235 / 0.75);
+}
+
+.hero-shader-fade {
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.card-premium {
+  border: 1px solid rgb(28 25 23 / 0.08);
+  background: var(--surface-raised);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.9) inset,
+    0 12px 32px rgb(28 25 23 / 0.06);
+}
+
+.cta-glow {
+  transition:
+    box-shadow 0.25s ease,
+    background-color 0.2s ease;
+}
+
+.cta-glow:hover {
+  box-shadow:
+    0 0 0 1px rgb(255 91 46 / 0.35),
+    0 12px 40px rgb(255 91 46 / 0.35);
+}
+
+[data-home-nav] header .header-menu-trigger {
+  color: var(--ink-on-dark);
+}
+
+[data-home-nav] header .header-menu-trigger:hover {
+  background: rgb(255 255 255 / 0.08);
 }

@@ -1,8 +1,12 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import {
+  ChatBubble,
+  WhatsAppPhoneShell,
+} from "@/components/home/WhatsAppPhoneShell";
 
 type Phase =
   | "audio"
@@ -21,17 +25,30 @@ const TIMING: Record<Phase, number> = {
   calendar: 2400,
 };
 
+const ORDER: Phase[] = [
+  "audio",
+  "transcript",
+  "typing",
+  "reply",
+  "chips",
+  "calendar",
+];
+
+function orderIndex(p: Phase) {
+  return ORDER.indexOf(p);
+}
+
 function AudioWave({ active }: { active: boolean }) {
   return (
-    <div className="flex items-end gap-0.5" aria-hidden>
+    <div className="flex h-4 items-end gap-0.5" aria-hidden>
       {[0, 1, 2, 3, 4].map((i) => (
         <motion.span
           key={i}
-          className="w-1 rounded-full bg-[#128C7E]"
+          className="block w-1 origin-bottom rounded-full bg-[#128C7E]"
           animate={
             active
-              ? { height: [6, 16, 8, 18, 6] }
-              : { height: 6 }
+              ? { scaleY: [0.35, 1, 0.5, 1.1, 0.35] }
+              : { scaleY: 0.35 }
           }
           transition={
             active
@@ -43,34 +60,50 @@ function AudioWave({ active }: { active: boolean }) {
                 }
               : { duration: 0.2 }
           }
-          style={{ height: 6 }}
+          style={{ height: 16 }}
         />
       ))}
     </div>
   );
 }
 
+function PhaseBubble({
+  visible,
+  children,
+}: {
+  visible: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <motion.div
+      className="shrink-0 will-change-[transform,opacity]"
+      initial={false}
+      animate={
+        visible
+          ? { opacity: 1, y: 0, scale: 1 }
+          : { opacity: 0, y: 8, scale: 0.98 }
+      }
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      style={{ pointerEvents: visible ? "auto" : "none" }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function HeroPhoneLoop({ className }: { className?: string }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = !!useReducedMotion();
   const [phase, setPhase] = useState<Phase>("audio");
 
   useEffect(() => {
     if (reduceMotion) return;
-    const order: Phase[] = [
-      "audio",
-      "transcript",
-      "typing",
-      "reply",
-      "chips",
-      "calendar",
-    ];
     let i = 0;
     let timer: ReturnType<typeof setTimeout>;
     const tick = () => {
-      const current = order[i];
+      const current = ORDER[i];
       setPhase(current);
       timer = setTimeout(() => {
-        i = (i + 1) % order.length;
+        i = (i + 1) % ORDER.length;
         tick();
       }, TIMING[current]);
     };
@@ -79,125 +112,81 @@ export function HeroPhoneLoop({ className }: { className?: string }) {
   }, [reduceMotion]);
 
   const showAll = reduceMotion;
-  const show = (p: Phase) => showAll || phase === p || orderIndex(phase) > orderIndex(p);
-
-  function orderIndex(p: Phase) {
-    const order: Phase[] = [
-      "audio",
-      "transcript",
-      "typing",
-      "reply",
-      "chips",
-      "calendar",
-    ];
-    return order.indexOf(p);
-  }
+  const show = (p: Phase) =>
+    showAll || phase === p || orderIndex(phase) > orderIndex(p);
 
   return (
-    <div className={cn("relative flex items-center justify-center gap-4", className)}>
-      <div
-        className="relative mx-auto w-[min(100%,280px)] rounded-[2.4rem] border border-white/10 bg-[#111] p-2 shadow-[0_40px_80px_rgb(0_0_0/0.55)]"
-        aria-label="Simulação de atendimento no WhatsApp"
+    <div
+      className={cn("relative flex items-center justify-center", className)}
+    >
+      <WhatsAppPhoneShell
+        size="hero"
+        name="Atendimento · WhatsApp"
+        status="online · IA + equipe"
       >
-        <div className="absolute left-1/2 top-2 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-black/80" aria-hidden />
-        <div className="overflow-hidden rounded-[2rem] bg-[#ECE5DD]">
-          <div className="bg-[#075E54] px-4 py-3 text-white">
-            <p className="text-sm font-medium">Atendimento · WhatsApp</p>
-            <p className="text-[11px] text-white/75">online · IA + equipe</p>
-          </div>
-          <div className="min-h-[320px] space-y-2.5 p-3 text-[12px] leading-snug">
-            {(show("audio") || showAll) && (
-              <div className="ml-auto max-w-[88%] rounded-2xl rounded-br-md bg-[#DCF8C6] px-3 py-2 text-[#111] shadow-sm">
-                <div className="mb-1 flex items-center justify-between gap-2 text-[10px] font-medium text-[#128C7E]">
-                  <span>Áudio · 0:24</span>
-                  <AudioWave active={!showAll && phase === "audio"} />
-                </div>
-              </div>
-            )}
-
-            {(show("transcript") || showAll) && (
-              <motion.div
-                initial={showAll ? false : { opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="ml-auto max-w-[88%] rounded-2xl rounded-br-md bg-[#DCF8C6] px-3 py-2 italic text-[#333]"
-              >
-                “Oi, vi o anúncio. Preciso de orçamento — atendem hoje?”
-              </motion.div>
-            )}
-
-            {(show("typing") || show("reply") || showAll) && (
-              <div className="mr-auto max-w-[88%] rounded-2xl rounded-bl-md border border-line bg-white px-3 py-2 text-ink">
-                {!showAll && phase === "typing" ? (
-                  <span className="text-ink-subtle">digitando…</span>
-                ) : show("reply") || showAll ? (
-                  <motion.span
-                    initial={showAll ? false : { opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    Atendo sim. É residência ou empresa? Qual cidade?
-                  </motion.span>
-                ) : null}
-              </div>
-            )}
-
-            {(show("reply") || showAll) && (
-              <p className="text-center text-[10px] text-[#128C7E]">
-                Resposta em 4 segundos
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <AnimatePresence mode="popLayout">
-        {(show("chips") || show("calendar") || showAll) && (
-          <motion.div
-            key="funnel"
-            initial={showAll ? false : { opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 10 }}
-            className="hidden w-44 shrink-0 lg:block"
-          >
-            <div className="card-dark-glow rounded-xl p-3 text-ink-on-dark">
-              <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted-on-dark">
-                Funil
-              </p>
-              <div className="mt-2 space-y-1.5">
-                {(show("chips") || showAll) && (
-                  <>
-                    <motion.span
-                      layout
-                      className="block rounded-md bg-accent/20 px-2 py-1 text-[11px] text-accent"
-                      initial={showAll ? false : { x: -40, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                    >
-                      orçamento: R$ 8 mil
-                    </motion.span>
-                    <motion.span
-                      layout
-                      className="block rounded-md bg-white/10 px-2 py-1 text-[11px]"
-                      initial={showAll ? false : { x: -40, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.15 }}
-                    >
-                      urgente
-                    </motion.span>
-                  </>
-                )}
-                {(show("calendar") || showAll) && (
-                  <motion.p
-                    className="mt-2 flex items-center gap-1 text-[11px] text-accent"
-                    initial={showAll ? false : { opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    Consulta 16h confirmada
-                  </motion.p>
-                )}
-              </div>
+        <PhaseBubble visible={show("audio") || showAll}>
+          <ChatBubble side="out" time="14:31" ticks>
+            <div className="flex items-center justify-between gap-3">
+              <span className="flex items-center gap-2 font-medium text-[#128C7E]">
+                <span className="inline-flex size-6 items-center justify-center rounded-full bg-[#128C7E]/15">
+                  ▶
+                </span>
+                0:24
+              </span>
+              <AudioWave active={!showAll && phase === "audio"} />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </ChatBubble>
+        </PhaseBubble>
+
+        <PhaseBubble visible={show("transcript") || showAll}>
+          <ChatBubble side="out" time="14:31" ticks>
+            <span className="italic text-[#333]">
+              “Oi, vi o anúncio. Preciso de orçamento — atendem hoje?”
+            </span>
+          </ChatBubble>
+        </PhaseBubble>
+
+        <PhaseBubble
+          visible={
+            show("typing") || show("reply") || show("chips") || showAll
+          }
+        >
+          <ChatBubble side="in" time="14:32">
+            {!showAll && phase === "typing" ? (
+              <span className="text-ink-subtle">digitando…</span>
+            ) : show("reply") || showAll ? (
+              <>
+                Atendo sim. É residência ou empresa? Qual cidade?
+              </>
+            ) : null}
+          </ChatBubble>
+        </PhaseBubble>
+
+        <PhaseBubble visible={show("reply") || showAll}>
+          <p className="py-0.5 text-center text-[10px] font-medium text-[#128C7E]">
+            Resposta em 4 segundos
+          </p>
+        </PhaseBubble>
+
+        <PhaseBubble visible={show("chips") || showAll}>
+          <div className="flex flex-wrap justify-end gap-1.5">
+            <span className="rounded-md bg-accent/20 px-2 py-1 text-[10px] font-medium text-accent">
+              orçamento: R$ 8 mil
+            </span>
+            <span className="rounded-md bg-white/90 px-2 py-1 text-[10px] text-ink">
+              urgente
+            </span>
+          </div>
+        </PhaseBubble>
+
+        <PhaseBubble visible={show("calendar") || showAll}>
+          <ChatBubble side="in" time="14:33" ticks>
+            <span className="font-medium text-accent">
+              Consulta 16h confirmada na agenda
+            </span>
+          </ChatBubble>
+        </PhaseBubble>
+      </WhatsAppPhoneShell>
 
       <div
         className="pointer-events-none absolute -right-8 top-1/2 -z-10 h-64 w-64 -translate-y-1/2 rounded-full bg-accent/25 blur-[80px]"

@@ -22,6 +22,9 @@ void main(){
   base += (n - 0.5) * 0.04;
   float glow = smoothstep(0.2, 0.0, distance(uv, vec2(0.72, 0.38)));
   base += vec3(1.0, 0.36, 0.18) * glow * 0.12;
+  float edge = smoothstep(0.0, 0.12, uv.x) * smoothstep(1.0, 0.88, uv.x);
+  edge *= smoothstep(0.0, 0.08, uv.y) * smoothstep(1.0, 0.92, uv.y);
+  base *= edge;
   outColor = vec4(base, 1.0);
 }`;
 
