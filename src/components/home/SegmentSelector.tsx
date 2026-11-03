@@ -67,7 +67,7 @@ export function SegmentSelector() {
               ))}
             </ul>
           </div>
-          <div className="rounded-xl border border-line bg-[#ECE5DD] p-4 shadow-md">
+          <div className="rounded-xl border border-line bg-[#ECE5DD] p-4 text-on-light shadow-md">
             <div className="ml-auto max-w-[88%] rounded-2xl rounded-br-md bg-[#DCF8C6] px-3 py-2 text-sm text-[#111]">
               <span className="text-[11px] font-medium text-[#128C7E]">
                 {data.clientAudio}

@@ -7,6 +7,7 @@ import { CtaFinalDark } from "@/components/home/CtaFinalDark";
 import { FAQ } from "@/components/sections/FAQ";
 import { Section, SectionHeader } from "@/components/sections/Section";
 import { Futuro } from "@/components/Futuro";
+import { LivePlatformStats } from "@/components/home/LivePlatformStats";
 
 <HomeClientShell />
 
@@ -23,6 +24,28 @@ import { Futuro } from "@/components/Futuro";
 <Section tone="petroleum" containerClassName="py-16 md:py-20">
   <SecurityStrip />
 </Section>
+
+<Futuro flag="mostrarNumeros">
+  <Section tone="muted">
+    <SectionHeader
+      title="Números ao vivo da plataforma."
+      lead="Atualizados quando a URL de métricas estiver configurada em brand.ts."
+    />
+    <LivePlatformStats />
+  </Section>
+</Futuro>
+
+<Futuro flag="mostrarSelosMeta">
+  <Section tone="muted" containerClassName="py-10">
+    <p className="text-sm text-ink-muted">Selo Meta Business — [REVISAR asset]</p>
+  </Section>
+</Futuro>
+
+<Futuro flag="mostrarSelosLgpd">
+  <Section tone="muted" containerClassName="py-10">
+    <p className="text-sm text-ink-muted">Selo LGPD — [REVISAR asset]</p>
+  </Section>
+</Futuro>
 
 <Futuro flag="mostrarDepoimentos">
   <Section tone="muted">

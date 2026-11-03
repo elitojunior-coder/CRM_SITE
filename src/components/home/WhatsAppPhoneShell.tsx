@@ -97,7 +97,7 @@ export function ChatBubble({
         "max-w-[92%] shrink-0 rounded-2xl px-3 py-2 text-[12px] leading-snug shadow-sm will-change-[transform,opacity]",
         side === "out"
           ? "ml-auto rounded-br-md bg-[#DCF8C6] text-[#111]"
-          : "mr-auto rounded-bl-md border border-[#000]/5 bg-white text-ink",
+          : "mr-auto rounded-bl-md border border-[#000]/5 bg-white text-on-light text-[#111]",
         className,
       )}
     >

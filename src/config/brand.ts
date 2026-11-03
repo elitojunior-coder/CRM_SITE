@@ -56,12 +56,19 @@ export const brand = {
     petroleum: "#0E3B43",
   },
 
+  /** URL pública com métricas agregadas (JSON). Vazio = não exibir bloco ao vivo. */
+  liveStats: {
+    url: "",
+  },
+
   flags: {
     mostrarPrecos: false,
     mostrarDepoimentos: false,
     mostrarLogosClientes: false,
     mostrarNumeros: false,
     mostrarChatDoSite: false,
+    mostrarSelosMeta: false,
+    mostrarSelosLgpd: false,
   },
 } as const;
 

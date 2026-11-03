@@ -11,6 +11,7 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useState } from "react";
 import { HomeTitle } from "@/components/home/HomeTitle";
+import { PlatformProductVideo } from "@/components/home/PlatformProductVideo";
 import { cn } from "@/lib/cn";
 
 const hotspots = [
@@ -262,6 +263,8 @@ export function PlatformShowcase() {
         CRM completo: conversas, funil e handoff humano — desenhado para densidade
         real de operação, não só um botão verde.
       </p>
+
+      <PlatformProductVideo />
 
       <div className="mt-10 hidden md:block">
         <div className="relative mx-auto w-full max-w-[960px] overflow-hidden rounded-2xl border border-[rgb(28_25_23/0.1)] bg-surface-raised shadow-[0_24px_64px_rgb(28_25_23/0.12),0_1px_0_rgb(255_255_255/0.9)_inset]">

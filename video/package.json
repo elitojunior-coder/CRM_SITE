@@ -1,0 +1,20 @@
+{
+  "name": "crm-site-product-film",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "node ./scripts/render-all.mjs"
+  },
+  "dependencies": {
+    "@remotion/bundler": "^4.0.286",
+    "@remotion/cli": "^4.0.286",
+    "@remotion/renderer": "^4.0.286",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "^4.0.286"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}

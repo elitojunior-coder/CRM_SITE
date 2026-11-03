@@ -41,6 +41,9 @@ async function main() {
   });
   await primeLazySections(desktop);
   await shot(desktop, "hero-1440x900.png", "#demonstracao");
+  await shot(desktop, "caminho-1440x900.png", "#caminho-mensagem");
+  await shot(desktop, "painel-1440x900.png", "#painel-exemplo");
+  await shot(desktop, "comparativo-1440x900.png", "#comparativo");
   await shot(desktop, "plataforma-1440x900.png", "#plataforma");
   await shot(desktop, "antes-depois-1440x900.png", "#antes-depois");
   await shot(desktop, "como-funciona-1440x900.png", "#como-funciona");
@@ -54,6 +57,9 @@ async function main() {
   });
   await primeLazySections(mobile);
   await shot(mobile, "hero-375x812.png", "#demonstracao");
+  await shot(mobile, "caminho-375x812.png", "#caminho-mensagem");
+  await shot(mobile, "painel-375x812.png", "#painel-exemplo");
+  await shot(mobile, "comparativo-375x812.png", "#comparativo");
   await shot(mobile, "plataforma-375x812.png", "#plataforma");
   await shot(mobile, "antes-depois-375x812.png", "#antes-depois");
   await shot(mobile, "como-funciona-375x812.png", "#como-funciona");

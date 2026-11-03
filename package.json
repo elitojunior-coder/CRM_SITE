@@ -10,6 +10,8 @@
     "review:capture": "node scripts/capture-home.mjs",
     "review:js": "node scripts/measure-home-js.mjs",
     "review:cls": "node scripts/test-home-cls.mjs",
+    "review:weight": "node scripts/measure-home-total.mjs",
+    "video:render": "npm install --prefix video && npm run render --prefix video",
     "lint": "eslint"
   },
   "dependencies": {

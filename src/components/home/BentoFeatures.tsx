@@ -143,8 +143,8 @@ function MiniVisual({ kind }: { kind: (typeof items)[number]["key"] }) {
     default:
       return (
         <div className="relative h-[min(60%,120px)] min-h-[88px] overflow-hidden rounded-xl bg-surface p-4">
-          <div className="flex size-12 items-center justify-center rounded-full border-2 border-accent/50 text-lg">
-            🛡
+          <div className="flex size-12 items-center justify-center rounded-full border-2 border-accent/50 text-[10px] font-bold tracking-wide text-accent">
+            LGPD
           </div>
           <motion.div
             className="absolute bottom-3 left-4 right-4 h-1 rounded-full bg-line"

@@ -10,6 +10,38 @@ const PlatformShowcase = dynamic(
   { ssr: false },
 );
 
+const MessagePath = dynamic(
+  () =>
+    import("@/components/home/MessagePath").then((m) => ({
+      default: m.MessagePath,
+    })),
+  { ssr: false },
+);
+
+const ExampleDashboard = dynamic(
+  () =>
+    import("@/components/home/ExampleDashboard").then((m) => ({
+      default: m.ExampleDashboard,
+    })),
+  { ssr: false },
+);
+
+const CompareColumns = dynamic(
+  () =>
+    import("@/components/home/CompareColumns").then((m) => ({
+      default: m.CompareColumns,
+    })),
+  { ssr: true },
+);
+
+const RealUseCases = dynamic(
+  () =>
+    import("@/components/home/RealUseCases").then((m) => ({
+      default: m.RealUseCases,
+    })),
+  { ssr: true },
+);
+
 const BeforeAfter = dynamic(
   () =>
     import("@/components/home/BeforeAfter").then((m) => ({
@@ -54,6 +86,18 @@ export function HomeBelowFold() {
   return (
     <>
       <PlatformShowcase />
+      <div className="mt-24">
+        <MessagePath />
+      </div>
+      <div className="mt-24">
+        <ExampleDashboard />
+      </div>
+      <div className="mt-24">
+        <CompareColumns />
+      </div>
+      <div className="mt-24">
+        <RealUseCases />
+      </div>
       <div className="mt-24">
         <BeforeAfter />
       </div>

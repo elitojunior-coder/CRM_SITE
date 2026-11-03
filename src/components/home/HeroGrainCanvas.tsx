@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
 const HeroGrainCanvasInner = dynamic(
   () =>
@@ -10,8 +11,20 @@ const HeroGrainCanvasInner = dynamic(
   { ssr: false },
 );
 
-/** WebGL leve — fallback CSS em `.grain-overlay` se falhar ou com reduced motion. */
+/** WebGL leve — só desktop; mobile usa CSS (`.grain-overlay`). */
 export function HeroGrainCanvas() {
+  const [desktop, setDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const sync = () => setDesktop(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  if (!desktop) return null;
+
   return (
     <div
       className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-[100vw] -translate-x-1/2 overflow-hidden motion-reduce:hidden"

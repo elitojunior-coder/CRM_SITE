@@ -3,7 +3,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { List, X } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { brand } from "@/config/brand";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/Button";
@@ -12,21 +12,47 @@ import { cn } from "@/lib/cn";
 
 const navLinks = [
   { href: "#plataforma", label: "Plataforma" },
-  { href: "#antes-depois", label: "Antes e depois" },
+  { href: "#caminho-mensagem", label: "Caminho" },
+  { href: "#painel-exemplo", label: "Painel" },
+  { href: "#comparativo", label: "Comparativo" },
   { href: "#como-funciona", label: "Como funciona" },
-  { href: "#calculadora", label: "Calculadora" },
-  { href: "#segmentos", label: "Segmentos" },
   { href: "#faq", label: "Dúvidas" },
 ];
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [compact, setCompact] = useState(false);
+  const [homeNav, setHomeNav] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const syncHome = () => setHomeNav(root.hasAttribute("data-home-nav"));
+    syncHome();
+    const observer = new MutationObserver(syncHome);
+    observer.observe(root, { attributes: true, attributeFilter: ["data-home-nav"] });
+
+    const onScroll = () => setCompact(window.scrollY > 32);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   const agendarHref = brand.contact.agendamentoUrl.startsWith("[")
     ? "#demonstracao"
     : brand.contact.agendamentoUrl;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-surface/90 backdrop-blur-sm">
+    <header
+      data-compact={homeNav && compact ? "true" : undefined}
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-surface/90 backdrop-blur-sm",
+        homeNav && "border-b-0",
+      )}
+    >
       <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-4 px-5 md:px-8">
         <Link
           href="/"

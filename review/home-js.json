@@ -1,36 +1,40 @@
 {
-  "totalBytes": 230677,
-  "totalKiB": 225,
+  "totalBytes": 241670,
+  "totalKiB": 236,
   "method": "PerformanceResourceTiming.transferSize (deduped, initial load window)",
-  "windowMs": 2547,
+  "windowMs": 2555,
   "scripts": [
     {
       "url": "chunks/2-3bcc782c_pu.js",
       "bytes": 72080
     },
     {
-      "url": "chunks/2pc3t2kcz0fju.js",
-      "bytes": 48061
+      "url": "chunks/2kzwudft9ieph.js",
+      "bytes": 48135
     },
     {
       "url": "chunks/107i8ab907rvg.js",
       "bytes": 45819
     },
     {
-      "url": "chunks/0mjndkhehr889.js",
-      "bytes": 14422
+      "url": "chunks/2ja7enh97-g71.js",
+      "bytes": 15710
     },
     {
-      "url": "chunks/2tm6ixy6ytj45.js",
-      "bytes": 9971
+      "url": "chunks/3lrxohw1jr85u.js",
+      "bytes": 14572
     },
     {
       "url": "chunks/2uy6962aj_g7c.js",
       "bytes": 9243
     },
     {
-      "url": "chunks/3xdcyw-933dod.js",
-      "bytes": 8089
+      "url": "chunks/1dx8swkdfxwnq.js",
+      "bytes": 8112
+    },
+    {
+      "url": "chunks/3bhv9wn9tv-wh.js",
+      "bytes": 7661
     },
     {
       "url": "chunks/2j1qdg6u05qhu.js",
@@ -45,10 +49,6 @@
       "bytes": 3903
     },
     {
-      "url": "chunks/0srfas8q_ire8.js",
-      "bytes": 2655
-    },
-    {
       "url": "chunks/310vm2bl3xxpt.js",
       "bytes": 2270
     },
@@ -61,8 +61,8 @@
       "bytes": 1072
     },
     {
-      "url": "chunks/0j461zh8bxf28.js",
-      "bytes": 917
+      "url": "chunks/2votg4ng0zj1n.js",
+      "bytes": 918
     },
     {
       "url": "chunks/2tu8se37e-rp1.js",

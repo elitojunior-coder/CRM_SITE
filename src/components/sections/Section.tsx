@@ -28,9 +28,9 @@ export function Section({
         tone === "warm" && "bg-surface",
         tone === "accent-band" && "bg-accent/5",
         tone === "dark" &&
-          "grain-overlay bg-surface-dark text-ink-on-dark [&_.text-ink]:text-ink-on-dark [&_.text-ink-muted]:text-ink-muted-on-dark [&_.text-accent]:text-accent",
+          "grain-overlay bg-surface-dark text-ink-on-dark [&_.text-accent]:text-accent",
         tone === "petroleum" &&
-          "bg-surface-petroleum text-ink-on-dark [&_.text-ink]:text-ink-on-dark [&_.text-ink-muted]:text-ink-muted-on-dark",
+          "grain-overlay bg-surface-petroleum text-ink-on-dark",
         className,
       )}
     >
