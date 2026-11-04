@@ -32,6 +32,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  distDir: isDev ? ".next-dev" : ".next",
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   cacheComponents: true,
   partialPrefetching: true,

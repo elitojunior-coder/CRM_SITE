@@ -153,7 +153,7 @@ export function HeroPhoneLoop({ className }: { className?: string }) {
         >
           <ChatBubble side="in" time="14:32">
             {!showAll && phase === "typing" ? (
-              <span className="text-ink-subtle">digitando…</span>
+              <span className="text-[#667781]">digitando…</span>
             ) : show("reply") || showAll ? (
               <>
                 Atendo sim. É residência ou empresa? Qual cidade?
@@ -173,7 +173,7 @@ export function HeroPhoneLoop({ className }: { className?: string }) {
             <span className="rounded-md bg-accent/20 px-2 py-1 text-[10px] font-medium text-accent">
               orçamento: R$ 8 mil
             </span>
-            <span className="rounded-md bg-white/90 px-2 py-1 text-[10px] text-ink">
+            <span className="rounded-md bg-white/90 px-2 py-1 text-[10px] text-[#111]">
               urgente
             </span>
           </div>
