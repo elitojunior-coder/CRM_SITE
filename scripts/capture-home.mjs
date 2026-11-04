@@ -8,12 +8,15 @@ const root = path.join(__dirname, "..");
 const reviewDir = path.join(root, "review");
 const baseUrl = process.env.BASE_URL ?? "http://127.0.0.1:3200";
 
-async function shot(page, file, selector) {
+async function shot(page, file, selector, fullPage = false) {
   if (selector) {
     await page.locator(selector).scrollIntoViewIfNeeded();
     await page.waitForTimeout(700);
   }
-  await page.screenshot({ path: path.join(reviewDir, file), fullPage: false });
+  await page.screenshot({
+    path: path.join(reviewDir, file),
+    fullPage,
+  });
 }
 
 async function primeLazySections(page) {
@@ -65,6 +68,24 @@ async function main() {
   await shot(mobile, "como-funciona-375x812.png", "#como-funciona");
   await shot(mobile, "bento-375x812.png", "#funcionalidades");
   await mobileBrowser.close();
+
+  const fullSizes = [
+    { w: 1440, h: 900, file: "home-full-1440x900.png" },
+    { w: 1024, h: 768, file: "home-full-1024x768.png" },
+    { w: 800, h: 600, file: "home-full-800x600.png" },
+    { w: 375, h: 812, file: "home-full-375x812.png", mobile: true },
+  ];
+
+  for (const size of fullSizes) {
+    const browser = await chromium.launch();
+    const page = await browser.newPage({
+      viewport: { width: size.w, height: size.h },
+      ...(size.mobile ? { isMobile: true } : {}),
+    });
+    await primeLazySections(page);
+    await shot(page, size.file, null, true);
+    await browser.close();
+  }
 
   console.log("Capturas salvas em review/");
 }

@@ -1,6 +1,9 @@
 /**
  * Única fonte de verdade para identidade, contato, legal e flags do site.
  * Nenhum valor deste arquivo deve ser duplicado em componentes.
+ *
+ * Para publicar: substitua os marcadores [PREENCHER] (principalmente product.name).
+ * Enquanto name estiver vazio, o site exibe monograma neutro — nunca o texto do marcador.
  */
 export const brand = {
   product: {

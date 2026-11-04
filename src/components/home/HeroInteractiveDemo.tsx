@@ -41,7 +41,7 @@ function FunnelCard({
   pulseKey: number;
 }) {
   return (
-    <div className="card-dark-glow spotlight-card hidden w-full max-w-[220px] shrink-0 rounded-2xl p-4 lg:block">
+    <div className="card-dark-glow spotlight-card hidden w-full max-w-[220px] shrink-0 rounded-2xl p-4 min-[1100px]:block">
       <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-ink-muted-on-dark">
         Funil · qualificação
       </p>
@@ -192,7 +192,7 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
   const footer = (
     <div className="shrink-0 space-y-2 border-t border-black/5 bg-[#F0F0F0] px-2 py-2">
       <div
-        className="flex gap-1 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex flex-wrap gap-1 pb-0.5 min-[1100px]:flex-nowrap min-[1100px]:overflow-x-auto min-[1100px]:[-ms-overflow-style:none] min-[1100px]:[scrollbar-width:none] min-[1100px]:[&::-webkit-scrollbar]:hidden"
         role="tablist"
         aria-label="Segmento da demonstração"
       >
@@ -214,15 +214,15 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
           </button>
         ))}
       </div>
-      <div className="flex flex-wrap gap-1">
+      <div className="grid grid-cols-1 gap-1 min-[400px]:grid-cols-2">
         {segment.quickMessages.map((msg) => (
           <button
             key={msg}
             type="button"
             onClick={() => void runMessage(msg)}
-            className="max-w-full truncate rounded-full border border-[#d1d7db] bg-white px-2 py-1 text-[10px] text-[#111] hover:border-[#075E54]/40"
+            className="rounded-xl border border-[#d1d7db] bg-white px-2 py-1.5 text-left text-[10px] leading-snug text-[#111] hover:border-[#075E54]/40 min-[1100px]:rounded-full min-[1100px]:py-1 min-[1100px]:text-center"
           >
-            {msg}
+            <span className="line-clamp-2">{msg}</span>
           </button>
         ))}
       </div>
@@ -246,8 +246,8 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
 
   return (
     <div className={cn("relative flex flex-col items-center gap-3", className)}>
-      <div className="flex w-full max-w-[640px] items-start justify-center gap-3 lg:gap-4">
-        <Iphone className="mx-auto w-[min(100%,268px)] max-w-[268px] drop-shadow-[0_32px_64px_rgb(0_0_0/0.45)] lg:w-[272px]">
+      <div className="flex w-full max-w-[640px] flex-col items-center justify-center gap-3 min-[1100px]:flex-row min-[1100px]:items-start min-[1100px]:gap-4">
+        <Iphone className="mx-auto w-[min(100%,360px)] max-w-[400px] drop-shadow-[0_32px_64px_rgb(0_0_0/0.45)] min-[1100px]:w-[272px] min-[1100px]:max-w-[272px]">
           <WhatsAppPhoneShell
             size="hero"
             name={`Demo · ${segment.label}`}

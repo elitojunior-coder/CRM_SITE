@@ -8,7 +8,7 @@ const HomeBelowFold = dynamic(
     import("@/components/home/HomeBelowFold").then((m) => ({
       default: m.HomeBelowFold,
     })),
-  { ssr: false, loading: () => <div className="min-h-[40vh]" aria-hidden /> },
+  { ssr: false, loading: () => <div className="min-h-[12rem]" aria-hidden /> },
 );
 
 export function HomeBelowFoldLazy() {
@@ -33,7 +33,7 @@ export function HomeBelowFoldLazy() {
 
   return (
     <div ref={sentinelRef}>
-      {mount ? <HomeBelowFold /> : <div className="min-h-[40vh]" aria-hidden />}
+      {mount ? <HomeBelowFold /> : <div className="min-h-[12rem]" aria-hidden />}
     </div>
   );
 }

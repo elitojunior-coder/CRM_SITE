@@ -12,11 +12,13 @@ export function HeroPremium() {
     : brand.contact.agendamentoUrl;
 
   return (
-    <div className="relative isolate w-full">
-      <HeroBackdrop />
-      <HeroGrainCanvas />
-      <div className="relative z-10 mx-auto grid w-full max-w-[1280px] items-center gap-6 px-5 md:px-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-8 lg:items-start">
-        <div className="max-w-xl lg:max-w-none">
+    <div className="relative isolate w-full overflow-x-clip">
+      <div className="pointer-events-none absolute inset-0 overflow-x-clip" aria-hidden>
+        <HeroBackdrop />
+        <HeroGrainCanvas />
+      </div>
+      <div className="relative z-10 mx-auto grid w-full max-w-[1280px] items-center gap-8 px-5 md:px-8 min-[768px]:max-[1099px]:justify-items-center min-[1100px]:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] min-[1100px]:gap-8 min-[1100px]:items-start">
+        <div className="max-w-xl min-[768px]:max-[1099px]:text-center min-[1100px]:max-w-none min-[1100px]:text-left">
           <h1 className="text-balance font-sans text-[2.65rem] font-semibold leading-[1.04] tracking-tight text-[#f5f2eb] md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
             Quem responde primeiro,{" "}
             <em className="font-display text-[1.05em] font-normal italic text-accent">
@@ -24,7 +26,7 @@ export function HeroPremium() {
             </em>
           </h1>
           <HeroSubtitleRotate />
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center min-[768px]:max-[1099px]:justify-center">
             <MagneticButton href={agendarHref} className="cta-glow">
               Agendar demonstração
             </MagneticButton>
@@ -36,7 +38,7 @@ export function HeroPremium() {
             </Link>
           </div>
         </div>
-        <HeroPhoneLazy className="lg:justify-self-end" />
+        <HeroPhoneLazy className="w-full min-[768px]:max-[1099px]:max-w-[400px] min-[1100px]:justify-self-end" />
       </div>
     </div>
   );

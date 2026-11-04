@@ -39,7 +39,7 @@ export function BeforeAfter() {
         Enquanto você demora, o cliente fecha com quem responde na hora.
       </p>
 
-      <div className="relative left-1/2 mt-12 w-screen max-w-[100vw] -translate-x-1/2 bg-surface-dark px-5 py-14 text-ink-on-dark md:px-8 md:py-20">
+      <div className="relative mt-12 w-full rounded-2xl bg-surface-dark px-5 py-14 text-ink-on-dark md:px-8 md:py-20">
         <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-2 lg:gap-16">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, x: -20 }}

@@ -8,6 +8,7 @@ import {
   Manrope,
 } from "next/font/google";
 import { brand } from "@/config/brand";
+import { productSloganDisplay, siteBrandSuffix } from "@/lib/brand-display";
 import "./globals.css";
 
 const geist = Geist({
@@ -49,10 +50,10 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: brand.product.name,
-    template: `%s · ${brand.product.name}`,
+    default: siteBrandSuffix(),
+    template: `%s · ${siteBrandSuffix()}`,
   },
-  description: brand.product.slogan,
+  description: productSloganDisplay(),
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

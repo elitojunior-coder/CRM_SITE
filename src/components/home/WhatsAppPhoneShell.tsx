@@ -55,7 +55,7 @@ export function WhatsAppPhoneShell({
           <div className="flex items-center gap-2.5">
             <div className="size-9 shrink-0 rounded-full bg-[#128C7E]/80 ring-2 ring-white/20" />
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold">{name}</p>
+              <p className="text-sm font-semibold leading-tight break-words">{name}</p>
               <p className="text-[11px] text-white/80">{status}</p>
             </div>
           </div>
@@ -67,7 +67,7 @@ export function WhatsAppPhoneShell({
             backgroundSize: "260px 260px, auto, auto",
           }}
         >
-          <div className="absolute inset-0 flex flex-col justify-start gap-2 overflow-y-auto overflow-x-hidden p-3 pb-2 pt-2">
+          <div className="absolute inset-0 flex flex-col justify-start gap-2 overflow-y-auto overflow-x-hidden p-3 pb-2 pt-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {children}
           </div>
         </div>

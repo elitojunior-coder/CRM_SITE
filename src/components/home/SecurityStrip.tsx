@@ -1,4 +1,5 @@
 import { brand } from "@/config/brand";
+import { brandField } from "@/lib/brand-display";
 import { TextLink } from "@/components/ui/TextLink";
 
 const items = [
@@ -16,8 +17,10 @@ export function SecurityStrip() {
           Segurança e LGPD
         </h2>
         <p className="mt-3 text-ink-muted-on-dark">
-          Ambiente multi-cliente, políticas publicadas e canal com{" "}
-          {brand.lgpd.encarregadoNome}.
+          Ambiente multi-cliente, políticas publicadas
+          {brandField(brand.lgpd.encarregadoNome)
+            ? ` e canal com ${brandField(brand.lgpd.encarregadoNome)}.`
+            : " e canal com o encarregado de dados."}
         </p>
         <TextLink
           href="/seguranca"

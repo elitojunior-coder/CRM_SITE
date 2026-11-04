@@ -17,31 +17,35 @@ import { cn } from "@/lib/cn";
 const hotspots = [
   {
     id: "inbox",
-    label: "Fila unificada",
+    label: "Inbox",
     hint: "WhatsApp, site e campanhas na mesma caixa — com dono e SLA.",
-    x: 12,
-    y: 28,
+    top: "11%",
+    left: "2%",
+    labelAlign: "right" as const,
   },
   {
     id: "chat",
-    label: "IA na conversa",
+    label: "IA",
     hint: "Respostas em segundos, com transcrição de áudio e tom da marca.",
-    x: 48,
-    y: 38,
+    top: "11%",
+    left: "34%",
+    labelAlign: "right" as const,
   },
   {
     id: "lead",
-    label: "Painel do lead",
+    label: "Lead",
     hint: "Intenção, dados coletados e resumo pronto para o vendedor.",
-    x: 78,
-    y: 32,
+    top: "11%",
+    left: "98%",
+    labelAlign: "left" as const,
   },
   {
     id: "funnel",
-    label: "Funil kanban",
+    label: "Funil",
     hint: "Cada conversa vira card — etapa, valor e próximo passo.",
-    x: 55,
-    y: 72,
+    top: "92%",
+    left: "98%",
+    labelAlign: "left" as const,
   },
 ] as const;
 
@@ -276,11 +280,24 @@ export function PlatformShowcase() {
               aria-label={spot.label}
               onClick={() => onHotspot(spot.id)}
               className={cn(
-                "absolute z-10 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-accent shadow-md transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50",
-                activeHotspot === spot.id && "ring-4 ring-accent/30",
+                "absolute z-10 flex max-w-[42%] items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50",
+                spot.labelAlign === "left"
+                  ? "-translate-x-full -translate-y-1/2 flex-row-reverse"
+                  : "-translate-y-1/2",
               )}
-              style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
-            />
+              style={{ left: spot.left, top: spot.top }}
+            >
+              <span
+                className={cn(
+                  "size-3.5 shrink-0 rounded-full border-2 border-white bg-accent shadow-md transition-transform hover:scale-110",
+                  activeHotspot === spot.id && "ring-4 ring-accent/30",
+                )}
+                aria-hidden
+              />
+              <span className="rounded-md bg-white/95 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-ink shadow-sm">
+                {spot.label}
+              </span>
+            </button>
           ))}
         </div>
         <AnimatePresence mode="wait">

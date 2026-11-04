@@ -6,7 +6,7 @@ export function MarqueeSegments() {
 
   return (
     <div
-      className="overflow-hidden border-y border-line bg-surface-muted py-8"
+      className="overflow-x-clip overflow-y-hidden border-y border-line bg-surface-muted py-8"
       aria-hidden
     >
       <Marquee pauseOnHover className="[--duration:45s] [--gap:2.5rem]">

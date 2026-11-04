@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { CurrentYear } from "@/components/layout/CurrentYear";
+import { BrandMark } from "@/components/brand/BrandMark";
 import { brand } from "@/config/brand";
+import { brandField, productNameOrNull, productSloganDisplay } from "@/lib/brand-display";
 import { TextLink } from "@/components/ui/TextLink";
 
 const legalLinks = [
@@ -16,50 +18,80 @@ export function Footer() {
     <footer className="mt-auto border-t border-line bg-surface-muted">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.2fr_1fr_1fr] md:px-8">
         <div>
-          <p className="font-display text-xl text-ink">{brand.product.name}</p>
+          <div className="flex items-center gap-3">
+            <BrandMark size="md" />
+            {productNameOrNull() ? (
+              <p className="font-display text-xl text-ink">{productNameOrNull()}</p>
+            ) : null}
+          </div>
           <p className="mt-2 max-w-sm text-sm leading-relaxed text-ink-muted">
-            {brand.product.slogan}
+            {productSloganDisplay()}
           </p>
           <p className="mt-6 text-xs leading-relaxed text-ink-muted">
             {brand.company.razaoSocial}
-            <br />
-            CNPJ {brand.company.cnpj}
-            <br />
-            {brand.company.endereco} · {brand.company.cidade}
+            {brandField(brand.company.cnpj) ? (
+              <>
+                <br />
+                CNPJ {brandField(brand.company.cnpj)}
+              </>
+            ) : null}
+            {brandField(brand.company.endereco) || brandField(brand.company.cidade) ? (
+              <>
+                <br />
+                {[brandField(brand.company.endereco), brandField(brand.company.cidade)]
+                  .filter(Boolean)
+                  .join(" · ")}
+              </>
+            ) : null}
           </p>
         </div>
 
         <div>
           <h2 className="text-sm font-semibold text-ink">Contato</h2>
           <ul className="mt-3 space-y-2 text-sm text-ink-muted">
-            <li>
-              Vendas:{" "}
-              <a
-                className="text-ink underline underline-offset-4 hover:text-accent"
-                href={`mailto:${brand.contact.emailComercial}`}
-              >
-                {brand.contact.emailComercial}
-              </a>
-            </li>
-            <li>
-              Suporte:{" "}
-              <a
-                className="text-ink underline underline-offset-4 hover:text-accent"
-                href={`mailto:${brand.contact.emailSuporte}`}
-              >
-                {brand.contact.emailSuporte}
-              </a>
-            </li>
-            <li>Telefone: {brand.contact.telefone}</li>
-            <li>
-              Encarregado de dados: {brand.lgpd.encarregadoNome} ·{" "}
-              <a
-                className="text-ink underline underline-offset-4 hover:text-accent"
-                href={`mailto:${brand.lgpd.encarregadoEmail}`}
-              >
-                {brand.lgpd.encarregadoEmail}
-              </a>
-            </li>
+            {brandField(brand.contact.emailComercial) ? (
+              <li>
+                Vendas:{" "}
+                <a
+                  className="text-ink underline underline-offset-4 hover:text-accent"
+                  href={`mailto:${brandField(brand.contact.emailComercial)}`}
+                >
+                  {brandField(brand.contact.emailComercial)}
+                </a>
+              </li>
+            ) : null}
+            {brandField(brand.contact.emailSuporte) ? (
+              <li>
+                Suporte:{" "}
+                <a
+                  className="text-ink underline underline-offset-4 hover:text-accent"
+                  href={`mailto:${brandField(brand.contact.emailSuporte)}`}
+                >
+                  {brandField(brand.contact.emailSuporte)}
+                </a>
+              </li>
+            ) : null}
+            {brandField(brand.contact.telefone) ? (
+              <li>Telefone: {brandField(brand.contact.telefone)}</li>
+            ) : null}
+            {brandField(brand.lgpd.encarregadoNome) ||
+            brandField(brand.lgpd.encarregadoEmail) ? (
+              <li>
+                Encarregado de dados: {brandField(brand.lgpd.encarregadoNome)}
+                {brandField(brand.lgpd.encarregadoEmail) ? (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a
+                      className="text-ink underline underline-offset-4 hover:text-accent"
+                      href={`mailto:${brandField(brand.lgpd.encarregadoEmail)}`}
+                    >
+                      {brandField(brand.lgpd.encarregadoEmail)}
+                    </a>
+                  </>
+                ) : null}
+              </li>
+            ) : null}
           </ul>
         </div>
 

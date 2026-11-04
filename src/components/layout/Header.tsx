@@ -4,7 +4,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { List, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BrandMark } from "@/components/brand/BrandMark";
 import { brand } from "@/config/brand";
+import { productNameOrNull } from "@/lib/brand-display";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/Button";
 import { WhatsAppLink } from "@/components/layout/WhatsAppLink";
@@ -56,9 +58,14 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-4 px-5 md:px-8">
         <Link
           href="/"
-          className="font-display text-lg text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+          className="inline-flex items-center gap-2.5 font-display text-lg text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         >
-          {brand.product.name}
+          <BrandMark size="sm" />
+          {productNameOrNull() ? (
+            <span>{productNameOrNull()}</span>
+          ) : (
+            <span className="sr-only">Início</span>
+          )}
         </Link>
 
         <nav
