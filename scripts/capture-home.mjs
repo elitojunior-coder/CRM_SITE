@@ -59,6 +59,18 @@ async function main() {
     await browser.close();
   }
 
+  const phoneBrowser = await chromium.launch();
+  const phonePage = await phoneBrowser.newPage({
+    viewport: { width: 400, height: 900 },
+    deviceScaleFactor: 2,
+  });
+  await primeLazySections(phonePage);
+  const phone = phonePage.locator('[data-review="hero-phone"]').first();
+  await phone.scrollIntoViewIfNeeded();
+  await phonePage.waitForTimeout(700);
+  await phone.screenshot({ path: path.join(reviewDir, "phone-2x.png") });
+  await phoneBrowser.close();
+
   console.log("Capturas salvas em review/");
 }
 

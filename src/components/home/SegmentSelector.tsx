@@ -2,8 +2,10 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
-import { segmentos, type SegmentoId } from "@/lib/segmentos";
+import { DeviceFrame } from "@/components/home/DeviceFrame";
+import { ChatBubble, WhatsAppPhoneShell } from "@/components/home/WhatsAppPhoneShell";
 import { HomeTitle } from "@/components/home/HomeTitle";
+import { segmentos, type SegmentoId } from "@/lib/segmentos";
 import { cn } from "@/lib/cn";
 
 export function SegmentSelector() {
@@ -43,53 +45,59 @@ export function SegmentSelector() {
         ))}
       </div>
 
-      <div className="mt-10 min-h-[420px] lg:min-h-[380px]">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={active}
-          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
-          transition={{ duration: 0.35 }}
-          className="grid gap-8 lg:grid-cols-2"
-          role="tabpanel"
-        >
-          <div>
-            <p className="text-lg font-medium text-ink">{data.pain}</p>
-            <ul className="mt-6 space-y-3">
-              {data.features.map((f) => (
-                <li
-                  key={f}
-                  className="flex gap-2 text-ink-muted before:text-accent before:content-['→']"
-                >
-                  {f}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-xl border border-line bg-[#ECE5DD] p-4 text-on-light shadow-md">
-            <div className="ml-auto max-w-[88%] rounded-2xl rounded-br-md bg-[#DCF8C6] px-3 py-2 text-sm text-[#111]">
-              <span className="text-[11px] font-medium text-[#128C7E]">
-                {data.clientAudio}
-              </span>
-              <p className="mt-1 italic">{data.transcript}</p>
+      <div className="mt-10 min-h-[380px]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+            transition={{ duration: 0.35 }}
+            className="grid gap-8 lg:grid-cols-2 lg:items-start"
+            role="tabpanel"
+          >
+            <div>
+              <p className="text-lg font-medium text-ink">{data.pain}</p>
+              <ul className="mt-6 space-y-3">
+                {data.features.map((f) => (
+                  <li
+                    key={f}
+                    className="flex gap-2 text-ink-muted before:text-accent before:content-['→']"
+                  >
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {data.chips.map((c) => (
+                  <span
+                    key={c.label}
+                    className="rounded-md border border-line bg-surface-raised px-2.5 py-1 text-xs font-medium text-ink"
+                  >
+                    {c.label}: {c.value}
+                  </span>
+                ))}
+              </div>
             </div>
-            <div className="mr-auto mt-2 max-w-[88%] rounded-2xl rounded-bl-md bg-white px-3 py-2 text-sm text-ink">
-              {data.agentReply}
-            </div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {data.chips.map((c) => (
-                <span
-                  key={c.label}
-                  className="rounded-md bg-accent/15 px-2 py-1 text-xs text-accent"
-                >
-                  {c.label}: {c.value}
-                </span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </AnimatePresence>
+            <DeviceFrame className="mx-auto w-full max-w-[320px] lg:mx-0 lg:justify-self-end">
+              <WhatsAppPhoneShell
+                name={data.label}
+                status="exemplo de conversa"
+                className="min-h-[420px]"
+              >
+                <ChatBubble side="out" time="14:31" ticks>
+                  <span className="text-[11px] font-medium text-[#128C7E]">
+                    {data.clientAudio}
+                  </span>
+                  <p className="mt-1 italic">{data.transcript}</p>
+                </ChatBubble>
+                <ChatBubble side="in" time="14:32" ticks>
+                  {data.agentReply}
+                </ChatBubble>
+              </WhatsAppPhoneShell>
+            </DeviceFrame>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

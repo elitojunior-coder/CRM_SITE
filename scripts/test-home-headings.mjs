@@ -69,6 +69,7 @@ async function main() {
     ["#antes-depois h2", "Mesma mensagem. Dois destinos."],
     ["#plataforma h2", "A plataforma por trás do WhatsApp."],
     ["#caminho-mensagem h2", "O caminho da mensagem."],
+    ["#segmentos h2", "O fluxo muda por segmento. A lógica é a mesma."],
     ["#calculadora h2", "Quanto você perde sem responder?"],
     ["#funcionalidades h2", "Tudo que sustenta venda — não enfeite."],
   ];
@@ -79,6 +80,27 @@ async function main() {
       failures.push(`${selector} expected "${want}" got "${normalize(text ?? "")}"`);
     }
   }
+
+  const wordGaps = await page.evaluate(() => {
+    const out = [];
+    for (const heading of document.querySelectorAll("h1, h2")) {
+      const blocks = [...heading.querySelectorAll("span.inline-block")];
+      if (blocks.length < 2) continue;
+      for (let i = 0; i < blocks.length - 1; i++) {
+        const a = blocks[i].getBoundingClientRect();
+        const b = blocks[i + 1].getBoundingClientRect();
+        if (Math.abs(a.top - b.top) > 6) continue;
+        const gap = b.left - a.right;
+        if (gap <= 0) {
+          out.push(
+            `${heading.tagName.toLowerCase()} "${(heading.textContent ?? "").slice(0, 48)}" gap ${gap.toFixed(2)}px between words ${i + 1}-${i + 2}`,
+          );
+        }
+      }
+    }
+    return out;
+  });
+  failures.push(...wordGaps);
 
   const mobile = await browser.newPage({
     viewport: { width: 375, height: 812 },

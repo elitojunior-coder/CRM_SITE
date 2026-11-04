@@ -13,11 +13,11 @@ import {
   type DemoScript,
 } from "../../../content/demo/index";
 import { keywordDemoResponder } from "@/lib/demo/keywordResponder";
+import { DeviceFrame } from "@/components/home/DeviceFrame";
 import {
   ChatBubble,
   WhatsAppPhoneShell,
 } from "@/components/home/WhatsAppPhoneShell";
-import { Iphone } from "@/components/ui/iphone";
 import { cn } from "@/lib/cn";
 
 type ChatLine =
@@ -189,10 +189,10 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
     void runMessage(draft);
   };
 
-  const footer = (
-    <div className="shrink-0 space-y-2 border-t border-black/5 bg-[#F0F0F0] px-2 py-2">
+  const demoControls = (
+    <div className="w-full min-w-0 space-y-3 rounded-2xl border border-line-on-dark/40 bg-surface-dark/40 p-3 min-[1100px]:max-w-[280px]">
       <div
-        className="flex flex-wrap gap-1 pb-0.5 min-[1100px]:flex-nowrap min-[1100px]:overflow-x-auto min-[1100px]:[-ms-overflow-style:none] min-[1100px]:[scrollbar-width:none] min-[1100px]:[&::-webkit-scrollbar]:hidden"
+        className="flex flex-wrap gap-1.5"
         role="tablist"
         aria-label="Segmento da demonstração"
       >
@@ -204,23 +204,23 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
             aria-selected={segment.segmentId === s.segmentId}
             onClick={() => setSegment(s)}
             className={cn(
-              "shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold transition-colors",
+              "shrink-0 rounded-full px-3 py-1 text-[11px] font-semibold transition-colors",
               segment.segmentId === s.segmentId
-                ? "bg-[#075E54] text-white"
-                : "bg-white text-[#54656f] hover:bg-[#e9edef]",
+                ? "bg-accent text-accent-fg"
+                : "border border-line-on-dark/50 text-ink-muted-on-dark hover:text-ink-on-dark",
             )}
           >
             {s.label}
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-1 gap-1 min-[400px]:grid-cols-2">
+      <div className="grid grid-cols-1 gap-1.5 min-[400px]:grid-cols-2 min-[1100px]:grid-cols-1">
         {segment.quickMessages.map((msg) => (
           <button
             key={msg}
             type="button"
             onClick={() => void runMessage(msg)}
-            className="rounded-xl border border-[#d1d7db] bg-white px-2 py-1.5 text-left text-[10px] leading-snug text-[#111] hover:border-[#075E54]/40 min-[1100px]:rounded-full min-[1100px]:py-1 min-[1100px]:text-center"
+            className="rounded-xl border border-line-on-dark/45 bg-white/5 px-2.5 py-2 text-left text-[11px] leading-snug text-ink-on-dark hover:border-accent/40 min-[1100px]:text-center"
           >
             <span className="line-clamp-2">{msg}</span>
           </button>
@@ -231,12 +231,12 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           placeholder="Digite como cliente…"
-          className="min-w-0 flex-1 rounded-full border border-[#d1d7db] bg-white px-3 py-2 text-[11px] text-[#111] outline-none focus:border-[#075E54]/50"
+          className="min-w-0 flex-1 rounded-full border border-line-on-dark/50 bg-white/10 px-3 py-2 text-[11px] text-ink-on-dark outline-none placeholder:text-ink-muted-on-dark focus:border-accent/50"
           aria-label="Mensagem livre na demonstração"
         />
         <button
           type="submit"
-          className="shrink-0 rounded-full bg-[#075E54] px-3 py-2 text-[10px] font-semibold text-white"
+          className="shrink-0 rounded-full bg-accent px-3 py-2 text-[10px] font-semibold text-accent-fg"
         >
           Enviar
         </button>
@@ -246,16 +246,15 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
 
   return (
     <div className={cn("relative flex flex-col items-center gap-3", className)}>
-      <div className="flex w-full max-w-[640px] flex-col items-center justify-center gap-3 min-[1100px]:flex-row min-[1100px]:items-start min-[1100px]:gap-4">
-        <Iphone
-          className="mx-auto w-[min(100%,360px)] max-w-[400px] drop-shadow-[0_32px_64px_rgb(0_0_0/0.45)] min-[768px]:max-[1099px]:aspect-auto min-[768px]:max-[1099px]:h-[640px] min-[768px]:max-[1099px]:w-[min(100%,320px)] min-[1100px]:aspect-[433/882] min-[1100px]:h-auto min-[1100px]:w-[272px] min-[1100px]:max-w-[272px]"
+      <div className="flex w-full max-w-[720px] flex-col items-center justify-center gap-4 min-[1100px]:flex-row min-[1100px]:items-start">
+        <DeviceFrame
+          data-review="hero-phone"
+          className="mx-auto w-[min(100%,360px)] max-w-[400px] min-[768px]:max-[1099px]:w-[min(100%,320px)] min-[1100px]:w-[272px] min-[1100px]:max-w-[272px]"
         >
           <WhatsAppPhoneShell
-            size="hero"
             name={`Demo · ${segment.label}`}
             status="online · IA roteirizada"
-            footer={footer}
-            className="h-full min-h-0"
+            className="h-full min-h-[480px] min-[1100px]:min-h-0 min-[1100px]:h-full"
           >
             {lines.map((line) =>
               line.role === "slot" ? (
@@ -279,8 +278,11 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
               </ChatBubble>
             ) : null}
           </WhatsAppPhoneShell>
-        </Iphone>
-        <FunnelCard chips={chips} slot={slot} pulseKey={chipPulse} />
+        </DeviceFrame>
+        <div className="flex w-full flex-col items-stretch gap-3 min-[1100px]:w-auto min-[1100px]:flex-row min-[1100px]:items-start">
+          {demoControls}
+          <FunnelCard chips={chips} slot={slot} pulseKey={chipPulse} />
+        </div>
       </div>
       <p className="max-w-md text-center text-xs leading-relaxed text-ink-muted-on-dark">
         Isto é uma demonstração. No seu WhatsApp, a IA responde com os dados da

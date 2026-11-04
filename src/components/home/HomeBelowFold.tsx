@@ -1,64 +1,12 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 import { Futuro } from "@/components/Futuro";
-
-const BeforeAfter = dynamic(
-  () =>
-    import("@/components/home/BeforeAfter").then((m) => ({
-      default: m.BeforeAfter,
-    })),
-  { ssr: true },
-);
-
-const PlatformShowcase = dynamic(
-  () =>
-    import("@/components/home/PlatformShowcase").then((m) => ({
-      default: m.PlatformShowcase,
-    })),
-  { ssr: false },
-);
-
-const MessagePath = dynamic(
-  () =>
-    import("@/components/home/MessagePath").then((m) => ({
-      default: m.MessagePath,
-    })),
-  { ssr: false },
-);
-
-const SegmentSelector = dynamic(
-  () =>
-    import("@/components/home/SegmentSelector").then((m) => ({
-      default: m.SegmentSelector,
-    })),
-  { ssr: false },
-);
-
-const LossCalculator = dynamic(
-  () =>
-    import("@/components/home/LossCalculator").then((m) => ({
-      default: m.LossCalculator,
-    })),
-  { ssr: true },
-);
-
-const BentoFeatures = dynamic(
-  () =>
-    import("@/components/home/BentoFeatures").then((m) => ({
-      default: m.BentoFeatures,
-    })),
-  { ssr: false },
-);
-
-const RealUseCases = dynamic(
-  () =>
-    import("@/components/home/RealUseCases").then((m) => ({
-      default: m.RealUseCases,
-    })),
-  { ssr: true },
-);
+import { BeforeAfter } from "@/components/home/BeforeAfter";
+import { BentoFeatures } from "@/components/home/BentoFeatures";
+import { LossCalculator } from "@/components/home/LossCalculator";
+import { MessagePath } from "@/components/home/MessagePath";
+import { PlatformShowcase } from "@/components/home/PlatformShowcase";
+import { RealUseCases } from "@/components/home/RealUseCases";
+import { SegmentSelector } from "@/components/home/SegmentSelector";
 
 function SectionGap({ children }: { children: ReactNode }) {
   return <div className="mt-16 md:mt-20">{children}</div>;

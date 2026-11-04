@@ -1,7 +1,7 @@
 "use client";
 
+import { Fragment, useMemo } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { useMemo } from "react";
 import { cn } from "@/lib/cn";
 
 type HomeTitleProps = {
@@ -41,24 +41,25 @@ export function HomeTitle({
             (w) => w.toLowerCase() === clean.toLowerCase(),
           );
           return (
-            <motion.span
-              key={`${word}-${i}`}
-              className={cn(
-                "inline-block",
-                accent && "font-display italic text-accent",
-              )}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8%" }}
-              transition={{
-                delay: i * 0.035,
-                duration: 0.4,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              {word}
-              {i < words.length - 1 ? " " : ""}
-            </motion.span>
+            <Fragment key={`${word}-${i}`}>
+              <motion.span
+                className={cn(
+                  "inline-block",
+                  accent && "font-display italic text-accent",
+                )}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-8%" }}
+                transition={{
+                  delay: i * 0.035,
+                  duration: 0.4,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                {word}
+              </motion.span>
+              {i < words.length - 1 ? " " : null}
+            </Fragment>
           );
         })}
       </span>

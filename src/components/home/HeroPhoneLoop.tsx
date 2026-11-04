@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { DeviceFrame } from "@/components/home/DeviceFrame";
 import {
   ChatBubble,
   WhatsAppPhoneShell,
@@ -119,10 +120,11 @@ export function HeroPhoneLoop({ className }: { className?: string }) {
     <div
       className={cn("relative flex items-center justify-center", className)}
     >
+      <DeviceFrame className="w-[min(100%,320px)] max-w-[360px]">
       <WhatsAppPhoneShell
-        size="hero"
         name="Atendimento · WhatsApp"
         status="online · IA + equipe"
+        className="h-full min-h-[520px]"
       >
         <PhaseBubble visible={show("audio") || showAll}>
           <ChatBubble side="out" time="14:31" ticks>
@@ -187,6 +189,7 @@ export function HeroPhoneLoop({ className }: { className?: string }) {
           </ChatBubble>
         </PhaseBubble>
       </WhatsAppPhoneShell>
+      </DeviceFrame>
 
       <div
         className="pointer-events-none absolute -right-8 top-1/2 -z-10 h-64 w-64 -translate-y-1/2 rounded-full bg-accent/25 blur-[80px]"

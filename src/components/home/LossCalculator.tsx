@@ -51,10 +51,16 @@ export function LossCalculator() {
   const [closeRate, setCloseRate] = useState(18);
 
   const perMonth = useMemo(() => {
-    const lostLeads =
-      msgs * 30 * (offHours / 100) * (1 - closeRate / 100) * 0.35;
-    return Math.round(lostLeads * ticket);
+    const volume =
+      msgs * 30 * (offHours / 100) * (closeRate / 100) * ticket;
+    return Math.round(volume);
   }, [msgs, offHours, ticket, closeRate]);
+
+  const ticketLabel = ticket.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    maximumFractionDigits: 0,
+  });
 
   const agendarHref = brand.contact.agendamentoUrl.startsWith("[")
     ? "#demonstracao"
@@ -131,6 +137,17 @@ export function LossCalculator() {
           <p className="mt-3 text-sm text-ink-muted-on-dark">
             estimativa feita com os seus números
           </p>
+          <div className="mt-4 rounded-lg border border-line-on-dark/50 bg-white/5 p-3 text-left text-xs leading-relaxed text-ink-muted-on-dark">
+            <p className="font-semibold text-ink-on-dark">Como calculamos</p>
+            <p className="mt-2 font-mono tabular-nums">
+              {msgs} msgs/dia × 30 dias × {offHours}% fora do horário × {closeRate}%
+              fechamento × {ticketLabel}
+            </p>
+            <p className="mt-2">
+              = {msgs * 30} msgs/mês × {(offHours / 100).toLocaleString("pt-BR", { style: "percent", maximumFractionDigits: 0 })} fora do horário ×{" "}
+              {(closeRate / 100).toLocaleString("pt-BR", { style: "percent", maximumFractionDigits: 0 })} × {ticketLabel}
+            </p>
+          </div>
           <div className="mt-8">
             <MagneticButton href={agendarHref}>Agendar demonstração</MagneticButton>
           </div>

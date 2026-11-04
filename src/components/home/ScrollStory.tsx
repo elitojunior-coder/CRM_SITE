@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { HomeTitle } from "@/components/home/HomeTitle";
+import { DeviceFrame } from "@/components/home/DeviceFrame";
 import {
   ChatBubble,
   WhatsAppPhoneShell,
@@ -36,8 +37,8 @@ type Scene = (typeof steps)[number]["scene"];
 
 function StoryPhoneScene({ scene }: { scene: Scene }) {
   return (
+    <DeviceFrame className="w-[min(100%,340px)] lg:w-[390px]">
     <WhatsAppPhoneShell
-      size="story"
       name={
         scene === "connect"
           ? "Configuração"
@@ -126,6 +127,7 @@ function StoryPhoneScene({ scene }: { scene: Scene }) {
         </motion.div>
       </AnimatePresence>
     </WhatsAppPhoneShell>
+    </DeviceFrame>
   );
 }
 

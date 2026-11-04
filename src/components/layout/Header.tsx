@@ -13,11 +13,12 @@ import { WhatsAppLink } from "@/components/layout/WhatsAppLink";
 import { cn } from "@/lib/cn";
 
 const navLinks = [
+  { href: "#antes-depois", label: "Antes / depois" },
   { href: "#plataforma", label: "Plataforma" },
   { href: "#caminho-mensagem", label: "Caminho" },
-  { href: "#painel-exemplo", label: "Painel" },
-  { href: "#comparativo", label: "Comparativo" },
-  { href: "#como-funciona", label: "Como funciona" },
+  { href: "#segmentos", label: "Segmentos" },
+  { href: "#calculadora", label: "Calculadora" },
+  { href: "#funcionalidades", label: "Funcionalidades" },
   { href: "#faq", label: "Dúvidas" },
 ];
 

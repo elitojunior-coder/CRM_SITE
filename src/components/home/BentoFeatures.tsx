@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { HomeTitle } from "@/components/home/HomeTitle";
 import { BentoGrid } from "@/components/ui/bento-grid";
-import { BorderBeam } from "@/components/ui/border-beam";
 import { MagicCard } from "@/components/ui/magic-card";
 import { cn } from "@/lib/cn";
 
@@ -53,7 +52,7 @@ function MiniVisual({ kind }: { kind: (typeof items)[number]["key"] }) {
     case "audio":
       return (
         <div
-          className="flex h-[min(60%,140px)] min-h-[100px] items-end justify-center gap-1.5 rounded-xl bg-surface p-4"
+          className="flex h-[min(72%,200px)] min-h-[140px] items-end justify-center gap-1.5 rounded-xl bg-surface p-4"
           aria-hidden
         >
           {[3, 5, 4, 7, 4, 6, 3].map((h, i) => (
@@ -75,7 +74,7 @@ function MiniVisual({ kind }: { kind: (typeof items)[number]["key"] }) {
       );
     case "funnel":
       return (
-        <div className="relative h-[min(60%,140px)] min-h-[100px] overflow-hidden rounded-xl bg-surface p-4">
+        <div className="relative h-[min(72%,200px)] min-h-[140px] overflow-hidden rounded-xl bg-surface p-4">
           <div className="flex h-full gap-2">
             {["Novo", "Qualif.", "Prop."].map((c) => (
               <div
@@ -97,7 +96,7 @@ function MiniVisual({ kind }: { kind: (typeof items)[number]["key"] }) {
       );
     case "summary":
       return (
-        <div className="h-[min(60%,120px)] min-h-[88px] overflow-hidden rounded-xl bg-surface p-4">
+        <div className="h-[min(72%,180px)] min-h-[120px] overflow-hidden rounded-xl bg-surface p-4">
           <motion.p
             className="text-sm leading-snug text-ink-muted"
             animate={
@@ -120,7 +119,7 @@ function MiniVisual({ kind }: { kind: (typeof items)[number]["key"] }) {
       );
     case "campaign":
       return (
-        <div className="flex h-[min(60%,120px)] min-h-[88px] flex-col justify-center gap-2 rounded-xl bg-surface p-4 text-[11px]">
+        <div className="flex h-[min(72%,180px)] min-h-[120px] flex-col justify-center gap-2 rounded-xl bg-surface p-4 text-[11px]">
           {["enviado", "entregue", "lido"].map((step, i) => (
             <motion.div
               key={step}
@@ -138,7 +137,7 @@ function MiniVisual({ kind }: { kind: (typeof items)[number]["key"] }) {
       );
     case "chat":
       return (
-        <div className="relative h-[min(60%,120px)] min-h-[88px] rounded-xl bg-surface p-4">
+        <div className="relative h-[min(72%,180px)] min-h-[120px] rounded-xl bg-surface p-4">
           <motion.div
             className="absolute bottom-4 right-4 max-w-[85%] rounded-xl border border-line bg-white px-3 py-2 text-xs shadow-lg"
             initial={reduceMotion ? false : { opacity: 0, y: 8, scale: 0.95 }}
@@ -151,20 +150,13 @@ function MiniVisual({ kind }: { kind: (typeof items)[number]["key"] }) {
       );
     default:
       return (
-        <div className="relative h-[min(60%,120px)] min-h-[88px] overflow-hidden rounded-xl bg-surface p-4">
-          <div className="flex size-12 items-center justify-center rounded-full border-2 border-accent/50 text-[10px] font-bold tracking-wide text-accent">
+        <div className="flex h-[min(72%,180px)] min-h-[120px] flex-col justify-center gap-3 rounded-xl bg-surface p-4">
+          <div className="flex size-14 items-center justify-center rounded-full border-2 border-accent/50 text-[11px] font-bold tracking-wide text-accent">
             LGPD
           </div>
-          <motion.div
-            className="absolute bottom-3 left-4 right-4 h-1 rounded-full bg-line"
-            aria-hidden
-          >
-            <motion.span
-              className="block h-full rounded-full bg-accent/60"
-              animate={reduceMotion ? undefined : { width: ["0%", "100%"] }}
-              transition={{ repeat: Infinity, duration: 3 }}
-            />
-          </motion.div>
+          <p className="text-xs leading-snug text-ink-muted">
+            Isolamento por conta, trilha de acesso e encarregado nomeado.
+          </p>
         </div>
       );
   }
@@ -179,8 +171,8 @@ export function BentoFeatures() {
         accentWords={["venda"]}
         className="text-3xl md:text-5xl"
       />
-      <BentoGrid className="mt-10 auto-rows-[minmax(180px,auto)] grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-4">
-        {items.map((item, index) => (
+      <BentoGrid className="mt-10 auto-rows-[minmax(148px,auto)] grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-4">
+        {items.map((item) => (
           <MagicCard
             key={item.key}
             gradientFrom="#ff5b2e"
@@ -193,15 +185,6 @@ export function BentoFeatures() {
             )}
           >
             <article className="relative flex h-full flex-col overflow-hidden rounded-[inherit] p-5">
-              {index < items.length - 1 ? (
-                <BorderBeam
-                  size={120}
-                  duration={8}
-                  colorFrom="#ff5b2e"
-                  colorTo="#0e3b43"
-                  borderWidth={1.5}
-                />
-              ) : null}
               <MiniVisual kind={item.key} />
               <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-ink">
                 {item.title}
