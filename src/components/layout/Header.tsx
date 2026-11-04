@@ -1,7 +1,7 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { List, X } from "@phosphor-icons/react";
+import { List, WhatsappLogo, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BrandMark } from "@/components/brand/BrandMark";
@@ -13,13 +13,11 @@ import { WhatsAppLink } from "@/components/layout/WhatsAppLink";
 import { cn } from "@/lib/cn";
 
 const navLinks = [
-  { href: "#antes-depois", label: "Antes / depois" },
   { href: "#plataforma", label: "Plataforma" },
-  { href: "#caminho-mensagem", label: "Caminho" },
   { href: "#segmentos", label: "Segmentos" },
   { href: "#calculadora", label: "Calculadora" },
-  { href: "#funcionalidades", label: "Funcionalidades" },
   { href: "#faq", label: "Dúvidas" },
+  { href: "#antes-depois", label: "Antes / depois" },
 ];
 
 export function Header() {
@@ -59,11 +57,11 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-4 px-5 md:px-8">
         <Link
           href="/"
-          className="inline-flex items-center gap-2.5 font-display text-lg text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+          className="inline-flex shrink-0 items-center gap-2.5 font-display text-lg text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         >
           <BrandMark size="sm" />
           {productNameOrNull() ? (
-            <span>{productNameOrNull()}</span>
+            <span className="whitespace-nowrap">{productNameOrNull()}</span>
           ) : (
             <span className="sr-only">Início</span>
           )}
@@ -89,20 +87,23 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 min-[1100px]:flex">
+        <div className="hidden shrink-0 items-center gap-2 min-[1100px]:flex">
           <WhatsAppLink
             id="whatsapp-vendas-header"
             data-header-secondary
+            aria-label="Falar no WhatsApp"
             className={cn(
-              "header-whatsapp-cta inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2",
+              "header-whatsapp-cta inline-flex size-10 shrink-0 items-center justify-center rounded-md border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2",
               homeNav
                 ? "border-[rgb(245_242_235/0.55)] bg-transparent text-ink-on-dark shadow-[inset_0_0_0_1px_rgb(245_242_235/0.35)] hover:border-[rgb(245_242_235/0.75)] hover:bg-white/8 focus-visible:ring-offset-surface-dark"
                 : "border-line bg-transparent text-ink shadow-[inset_0_0_0_1px_rgb(28_25_23/0.12)] hover:border-ink-muted hover:bg-surface-muted focus-visible:ring-offset-surface",
             )}
           >
-            Falar no WhatsApp
+            <WhatsappLogo className="size-5" weight="fill" aria-hidden />
           </WhatsAppLink>
-          <Button href={agendarHref}>Agendar demonstração</Button>
+          <Button href={agendarHref} className="whitespace-nowrap">
+            Agendar demo
+          </Button>
         </div>
 
         <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -138,13 +139,15 @@ export function Header() {
               </nav>
               <div className="mt-auto flex flex-col gap-2 pt-8">
                 <WhatsAppLink
-                  className="inline-flex items-center justify-center rounded-md border border-line px-4 py-2.5 text-sm font-medium"
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-line px-4 py-2.5 text-sm font-medium"
                   onClick={() => setOpen(false)}
+                  aria-label="Falar no WhatsApp"
                 >
-                  Falar no WhatsApp
+                  <WhatsappLogo className="size-5" weight="fill" aria-hidden />
+                  WhatsApp
                 </WhatsAppLink>
-                <Button href={agendarHref} onClick={() => setOpen(false)}>
-                  Agendar demonstração
+                <Button href={agendarHref} className="whitespace-nowrap" onClick={() => setOpen(false)}>
+                  Agendar demo
                 </Button>
               </div>
             </Dialog.Content>

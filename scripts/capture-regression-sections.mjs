@@ -29,12 +29,16 @@ const viewports = [
   { w: 375, h: 812, suffix: "375", mobile: true },
 ];
 
+const captureStyles = [
+  "*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}",
+  "header{visibility:hidden!important;pointer-events:none!important}",
+  "a.fixed.bottom-5.right-5.z-40{visibility:hidden!important}",
+].join("");
+
 async function prime(page) {
-  await page.addStyleTag({
-    content:
-      "*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}",
-  });
+  await page.addStyleTag({ content: captureStyles });
   await page.goto(baseUrl, { waitUntil: "networkidle" });
+  await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(900);
   const height = await page.evaluate(() => document.body.scrollHeight);
   for (let i = 1; i <= 12; i++) {
@@ -63,7 +67,7 @@ async function main() {
       await page.evaluate(() => window.scrollTo(0, 0));
       const loc = page.locator(sec.selector).first();
       await loc.scrollIntoViewIfNeeded();
-      await page.waitForTimeout(1200);
+      await page.waitForTimeout(1800);
       await loc.screenshot({
         path: path.join(outDir, `${sec.name}-${vp.suffix}.png`),
         animations: "disabled",

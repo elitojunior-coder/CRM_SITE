@@ -11,7 +11,7 @@ export function HeroPremium() {
     : brand.contact.agendamentoUrl;
 
   return (
-    <div className="relative isolate w-full overflow-x-clip bg-[#0B0D0E]">
+    <div className="relative isolate w-full min-w-full overflow-x-clip bg-surface-dark">
       <div className="pointer-events-none absolute inset-0 overflow-x-clip" aria-hidden>
         <HeroBackdrop />
         <HeroGrainCanvas />
@@ -31,14 +31,18 @@ export function HeroPremium() {
           passam para o seu time com tudo resumido.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <MagneticButton href={agendarHref} className="cta-glow">
-            Agendar demonstração
+          <MagneticButton href={agendarHref} className="cta-glow whitespace-nowrap">
+            Agendar demo
           </MagneticButton>
           <WhatsAppLink
             id="whatsapp-vendas-hero"
-            className="inline-flex items-center justify-center rounded-md border border-line-on-dark px-6 py-3 text-sm font-semibold text-ink-on-dark transition-colors hover:bg-white/8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-dark"
+            aria-label="Falar no WhatsApp"
+            className="inline-flex size-11 shrink-0 items-center justify-center rounded-md border border-line-on-dark text-ink-on-dark transition-colors hover:bg-white/8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-dark"
           >
-            Falar no WhatsApp
+            <span className="sr-only">Falar no WhatsApp</span>
+            <svg className="size-5" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+              <path d="M128 24A104 104 0 0 0 36.18 176.88L24 232l55.47-12.09A104 104 0 1 0 128 24Zm0 192a87.87 87.87 0 0 1-44.06-11.81l-3.15-1.86-32.89 7.16 7-32-1.85-3.18A88 88 0 1 1 128 216Z" />
+            </svg>
           </WhatsAppLink>
         </div>
         <ProductStage media={{ type: "replica" }} className="mt-10 md:mt-12" />

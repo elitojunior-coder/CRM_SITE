@@ -21,7 +21,7 @@ export function ProductStageShell({ children, className }: Props) {
   return (
     <div ref={ref} className={cn("relative mx-auto w-full max-w-[1200px] px-5 md:px-8", className)}>
       <div
-        className="pointer-events-none absolute -inset-x-[10%] -top-[8%] bottom-[28%] -z-10"
+        className="pointer-events-none absolute -inset-x-[8%] top-[45%] bottom-0 -z-10"
         aria-hidden
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_85%_55%_at_50%_100%,rgba(255,91,46,0.38),transparent_58%),radial-gradient(ellipse_70%_45%_at_50%_105%,rgba(14,59,67,0.55),transparent_52%)]" />

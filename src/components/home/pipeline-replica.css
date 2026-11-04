@@ -18,12 +18,6 @@
   animation: pipeline-pulse 1.8s ease-in-out infinite;
 }
 
-@media (max-width: 767px) {
-  .pipeline-mobile-clip {
-    clip-path: inset(0 58% 0 0);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   [data-pipeline-pulse="new-message"],
   [data-pipeline-pulse="ai-typing"] {

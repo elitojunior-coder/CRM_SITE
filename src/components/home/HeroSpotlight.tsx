@@ -5,6 +5,13 @@ export function HeroSpotlight() {
       className="pointer-events-none absolute inset-0 -z-10 overflow-hidden motion-reduce:opacity-60"
       aria-hidden
     >
+      <div
+        className="absolute inset-x-0 top-0 h-[min(520px,62vh)]"
+        style={{
+          background:
+            "radial-gradient(ellipse 130% 85% at 50% -18%, rgba(255, 91, 46, 0.62), transparent 52%), radial-gradient(ellipse 110% 75% at 50% -12%, rgba(14, 59, 67, 0.72), transparent 54%)",
+        }}
+      />
       <div className="hero-beam hero-beam--left" />
       <div className="hero-beam hero-beam--center" />
       <div className="hero-beam hero-beam--right" />

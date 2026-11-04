@@ -1,33 +1,33 @@
 [
   {
     "file": "antes-depois-1440.png",
-    "diffRatio": 0.21086109413202933,
-    "mismatchedPixels": 209741
+    "diffRatio": 0.0059998713164328915,
+    "mismatchedPixels": 5968
   },
   {
     "file": "antes-depois-375.png",
-    "diffRatio": 1,
-    "note": "size 335x1279 vs 335x1278"
+    "diffRatio": 0.0018966201854576882,
+    "mismatchedPixels": 812
   },
   {
     "file": "calculadora-1440.png",
-    "diffRatio": 0.025213006902502156,
-    "mismatchedPixels": 18702
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "calculadora-375.png",
-    "diffRatio": 0.08040373671212284,
-    "mismatchedPixels": 26208
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "caminho-mensagem-1440.png",
-    "diffRatio": 1,
-    "note": "size 1216x505 vs 1216x504"
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "caminho-mensagem-375.png",
-    "diffRatio": 1,
-    "note": "size 335x1022 vs 335x1054"
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "cta-final-1440.png",
@@ -41,8 +41,8 @@
   },
   {
     "file": "faq-1440.png",
-    "diffRatio": 0,
-    "mismatchedPixels": 0
+    "diffRatio": 0.00777128764278297,
+    "mismatchedPixels": 11974
   },
   {
     "file": "faq-375.png",
@@ -51,8 +51,8 @@
   },
   {
     "file": "footer-1440.png",
-    "diffRatio": 0.000021517996870109545,
-    "mismatchedPixels": 11
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "footer-375.png",
@@ -61,32 +61,32 @@
   },
   {
     "file": "funcionalidades-1440.png",
-    "diffRatio": 1,
-    "note": "size 1216x1257 vs 1216x1256"
+    "diffRatio": 0.007817083263493127,
+    "mismatchedPixels": 11939
   },
   {
     "file": "funcionalidades-375.png",
-    "diffRatio": 0.004459708003059945,
-    "mismatchedPixels": 2740
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "plataforma-1440.png",
-    "diffRatio": 1,
-    "note": "size 1216x703 vs 1216x704"
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "plataforma-375.png",
-    "diffRatio": 1,
-    "note": "size 335x796 vs 335x797"
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "segmentos-1440.png",
-    "diffRatio": 1,
-    "note": "size 1216x814 vs 1216x815"
+    "diffRatio": 0.0050754762673555056,
+    "mismatchedPixels": 5030
   },
   {
     "file": "segmentos-375.png",
-    "diffRatio": 0.029673795968610556,
-    "mismatchedPixels": 11571
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   }
 ]

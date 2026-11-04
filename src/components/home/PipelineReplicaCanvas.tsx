@@ -1,4 +1,6 @@
 import {
+  ArrowsClockwise,
+  Funnel,
   Globe,
   InstagramLogo,
   MagnifyingGlass,
@@ -8,16 +10,16 @@ import {
 import {
   columnTotals,
   formatPipelineBrl,
-  pipelineCards,
   pipelineColumns,
   pipelineFunnels,
   type PipelineCard,
   type PipelineChannel,
 } from "../../../content/demo/pipeline";
 import { cn } from "@/lib/cn";
-
-const CANVAS_W = 1280;
-const CANVAS_H = 800;
+import {
+  PIPELINE_CANVAS_SIZE,
+  PIPELINE_SIDEBAR_W,
+} from "@/components/home/pipeline-layout";
 
 function ChannelIcon({ channel }: { channel: PipelineChannel }) {
   const cls = "size-3.5 shrink-0 opacity-70";
@@ -97,68 +99,87 @@ function PipelineCardView({ card }: { card: PipelineCard }) {
   );
 }
 
-export function PipelineReplicaCanvas() {
+type Props = {
+  cards: PipelineCard[];
+  hiddenCardId?: string | null;
+};
+
+export function PipelineReplicaCanvas({ cards, hiddenCardId }: Props) {
   return (
     <div
       className="pipeline-board flex shrink-0 flex-col bg-[#f3f1ec] text-[#1c1917]"
-      style={{ width: CANVAS_W, height: CANVAS_H, fontSize: 12 }}
+      style={{
+        width: PIPELINE_CANVAS_SIZE.width,
+        height: PIPELINE_CANVAS_SIZE.height,
+        fontSize: 12,
+      }}
       aria-hidden
     >
-      <div className="flex min-h-0 flex-1">
-        <aside className="flex w-[52px] shrink-0 flex-col border-r border-[#e7e5e4] bg-[#fafaf9] py-3">
-          {pipelineFunnels.map((funnel) => (
-            <div
-              key={funnel.id}
-              className={cn(
-                "mx-auto mb-2 flex h-14 w-9 items-center justify-center rounded-md text-[10px] font-semibold leading-tight [writing-mode:vertical-rl] rotate-180",
-                funnel.active
-                  ? "bg-[#0E3B43] text-white"
-                  : "bg-transparent text-[#78716c]",
-              )}
+      <div className="flex min-h-0 flex-1 flex-col">
+        <header className="flex shrink-0 items-center gap-3 border-b border-[#e7e5e4] bg-[#fafaf9] px-4 py-2.5">
+          <div className="min-w-0">
+            <p className="text-[13px] font-semibold text-[#1c1917]">Comercial</p>
+            <p className="text-[11px] text-[#78716c]">Funil principal · WhatsApp + site</p>
+          </div>
+          <div className="ml-auto flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 rounded-md border border-[#e7e5e4] bg-white px-2.5 py-1.5 text-[12px] font-medium text-[#44403c]"
             >
-              {funnel.label}
+              <SlidersHorizontal className="size-3.5" />
+              Filtros
+            </button>
+            <div className="flex items-center gap-1.5 rounded-md border border-[#e7e5e4] bg-white px-2.5 py-1.5">
+              <MagnifyingGlass className="size-3.5 text-[#78716c]" />
+              <span className="text-[12px] text-[#a8a29e]">Buscar lead</span>
             </div>
-          ))}
-        </aside>
-        <div className="flex min-w-0 flex-1 flex-col">
-          <header className="flex shrink-0 items-center gap-3 border-b border-[#e7e5e4] bg-white px-4 py-2.5">
-            <div>
-              <p className="text-[13px] font-semibold text-[#1c1917]">Comercial</p>
-              <p className="text-[11px] text-[#78716c]">Funil principal · WhatsApp + site</p>
+            <div className="flex -space-x-1.5 pl-1">
+              {[
+                { i: "RF", c: "#FF5B2E" },
+                { i: "AL", c: "#6366F1" },
+                { i: "MP", c: "#0E3B43" },
+              ].map((m) => (
+                <span
+                  key={m.i}
+                  className="flex size-7 items-center justify-center rounded-full border-2 border-[#fafaf9] text-[10px] font-semibold text-white"
+                  style={{ backgroundColor: m.c }}
+                >
+                  {m.i}
+                </span>
+              ))}
             </div>
-            <div className="ml-auto flex items-center gap-2">
-              <button
-                type="button"
-                className="inline-flex items-center gap-1.5 rounded-md border border-[#e7e5e4] px-2.5 py-1.5 text-[12px] font-medium text-[#44403c]"
+          </div>
+        </header>
+        <div className="flex min-h-0 flex-1">
+          <aside
+            className="flex shrink-0 flex-col gap-1 border-r border-[#e7e5e4] bg-[#fafaf9] p-2"
+            style={{ width: PIPELINE_SIDEBAR_W }}
+          >
+            {pipelineFunnels.map((funnel) => (
+              <div
+                key={funnel.id}
+                className={cn(
+                  "flex items-center gap-2 rounded-md px-2 py-2 text-[11px] font-semibold leading-tight",
+                  funnel.active
+                    ? "bg-[#0E3B43] text-white"
+                    : "text-[#78716c] hover:bg-[#f5f5f4]",
+                )}
               >
-                <SlidersHorizontal className="size-3.5" />
-                Filtros
-              </button>
-              <div className="flex items-center gap-1.5 rounded-md border border-[#e7e5e4] bg-[#fafaf9] px-2.5 py-1.5">
-                <MagnifyingGlass className="size-3.5 text-[#78716c]" />
-                <span className="text-[12px] text-[#a8a29e]">Buscar lead</span>
+                {funnel.id === "reativacao" ? (
+                  <ArrowsClockwise className="size-4 shrink-0" weight="duotone" />
+                ) : (
+                  <Funnel className="size-4 shrink-0" weight={funnel.active ? "fill" : "duotone"} />
+                )}
+                <span className="truncate">{funnel.label}</span>
               </div>
-              <div className="flex -space-x-1.5 pl-1">
-                {[
-                  { i: "RF", c: "#FF5B2E" },
-                  { i: "AL", c: "#6366F1" },
-                  { i: "MP", c: "#0E3B43" },
-                ].map((m) => (
-                  <span
-                    key={m.i}
-                    className="flex size-7 items-center justify-center rounded-full border-2 border-white text-[10px] font-semibold text-white"
-                    style={{ backgroundColor: m.c }}
-                  >
-                    {m.i}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </header>
+            ))}
+          </aside>
           <div className="grid min-h-0 flex-1 grid-cols-5 gap-0 overflow-hidden">
             {pipelineColumns.map((col) => {
-              const cards = pipelineCards.filter((c) => c.columnId === col.id);
-              const totals = columnTotals(pipelineCards, col.id);
+              const inCol = cards.filter(
+                (c) => c.columnId === col.id && c.id !== hiddenCardId,
+              );
+              const totals = columnTotals(cards, col.id);
               return (
                 <div
                   key={col.id}
@@ -171,8 +192,8 @@ export function PipelineReplicaCanvas() {
                       {totals.count} · {formatPipelineBrl(totals.totalCents)}
                     </p>
                   </div>
-                  <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden p-2">
-                    {cards.map((card) => (
+                  <div className="flex flex-col gap-2 p-2">
+                    {inCol.map((card) => (
                       <PipelineCardView key={card.id} card={card} />
                     ))}
                   </div>
@@ -186,4 +207,4 @@ export function PipelineReplicaCanvas() {
   );
 }
 
-export const PIPELINE_CANVAS_SIZE = { width: CANVAS_W, height: CANVAS_H };
+export { PIPELINE_CANVAS_SIZE } from "@/components/home/pipeline-layout";
