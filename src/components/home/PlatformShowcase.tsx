@@ -5,12 +5,14 @@ import {
   CaretRight,
   ChartBar,
   Kanban,
+  Play,
   Sparkle,
   User,
 } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useCallback, useState } from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import { HomeTitle } from "@/components/home/HomeTitle";
+import { PlatformPainelPanel } from "@/components/home/PlatformPainelPanel";
 import { PlatformProductVideo } from "@/components/home/PlatformProductVideo";
 import { cn } from "@/lib/cn";
 
@@ -50,9 +52,31 @@ const hotspots = [
 ] as const;
 
 type HotspotId = (typeof hotspots)[number]["id"];
+type CrmTab = "inbox" | "funnel" | "painel" | "video";
 
-function CrmMock({ tab }: { tab: "inbox" | "funnel" }) {
+function CrmMock({
+  tab,
+  onTabChange,
+}: {
+  tab: CrmTab;
+  onTabChange: (tab: CrmTab) => void;
+}) {
   const reduceMotion = useReducedMotion();
+
+  const tabButton = (id: CrmTab, label: string, icon: ReactNode) => (
+    <button
+      key={id}
+      type="button"
+      onClick={() => onTabChange(id)}
+      className={cn(
+        "flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium transition-colors",
+        tab === id ? "bg-accent/10 text-accent" : "text-ink-muted hover:text-ink",
+      )}
+    >
+      {icon}
+      {label}
+    </button>
+  );
 
   return (
     <div className="flex h-full min-h-[420px] flex-col bg-[#f8f7f4] text-[11px] text-ink md:min-h-[480px] md:text-xs">
@@ -63,12 +87,25 @@ function CrmMock({ tab }: { tab: "inbox" | "funnel" }) {
           <span className="size-2.5 rounded-full bg-[#28c840]" />
         </div>
         <div className="mx-auto flex max-w-md flex-1 items-center justify-center rounded-md bg-surface px-3 py-1 text-[10px] text-ink-muted">
-          app.seucrm.com.br / inbox
+          app.seucrm.com.br /{" "}
+          {tab === "painel"
+            ? "painel"
+            : tab === "video"
+              ? "demo"
+              : tab === "funnel"
+                ? "funil"
+                : "inbox"}
         </div>
       </div>
-      <div className="flex min-h-0 flex-1">
-        {tab === "inbox" ? (
-          <>
+      <div className="flex min-h-0 flex-1 flex-col">
+        {tab === "video" ? (
+          <div className="relative min-h-0 flex-1 overflow-hidden bg-black">
+            <PlatformProductVideo className="mt-0 h-full [&>div]:h-full [&_img]:object-cover" />
+          </div>
+        ) : tab === "painel" ? (
+          <PlatformPainelPanel />
+        ) : tab === "inbox" ? (
+          <div className="flex min-h-0 flex-1">
             <aside className="hidden w-[22%] min-w-[120px] shrink-0 border-r border-line bg-white md:block">
               <p className="border-b border-line px-3 py-2 font-semibold text-ink">
                 Conversas
@@ -174,7 +211,7 @@ function CrmMock({ tab }: { tab: "inbox" | "funnel" }) {
                 </div>
               </div>
             </aside>
-          </>
+          </div>
         ) : (
           <div className="flex min-w-0 flex-1 flex-col bg-white p-3">
             <div className="mb-3 flex items-center gap-2 text-sm font-semibold">
@@ -208,42 +245,43 @@ function CrmMock({ tab }: { tab: "inbox" | "funnel" }) {
           </div>
         )}
       </div>
-      <div className="flex shrink-0 gap-1 border-t border-line bg-white px-2 py-1.5">
-        <button
-          type="button"
-          className={cn(
-            "flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium",
-            tab === "inbox" ? "bg-accent/10 text-accent" : "text-ink-muted",
-          )}
-        >
-          <ChartBar size={14} weight="regular" />
-          Inbox
-        </button>
-        <button
-          type="button"
-          className={cn(
-            "flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium",
-            tab === "funnel" ? "bg-accent/10 text-accent" : "text-ink-muted",
-          )}
-        >
-          <Kanban size={14} weight="regular" />
-          Funil
-        </button>
+      <div
+        className="flex shrink-0 flex-wrap gap-1 border-t border-line bg-white px-2 py-1.5"
+        role="tablist"
+        aria-label="Visões do CRM"
+      >
+        {tabButton("inbox", "Inbox", <ChartBar size={14} weight="regular" />)}
+        {tabButton("funnel", "Funil", <Kanban size={14} weight="regular" />)}
+        {tabButton("painel", "Painel", <ChartBar size={14} weight="fill" />)}
+        {tabButton(
+          "video",
+          "Ver em 20s",
+          <Play size={14} weight="fill" />,
+        )}
       </div>
     </div>
   );
 }
 
-const mobileSlides: { id: HotspotId; title: string }[] = [
+const mobileSlides: { id: HotspotId | "painel" | "video"; title: string }[] = [
   { id: "inbox", title: "Caixa de conversas" },
   { id: "chat", title: "Conversa com IA" },
   { id: "lead", title: "Painel do lead" },
   { id: "funnel", title: "Funil kanban" },
+  { id: "painel", title: "Painel do dia" },
+  { id: "video", title: "Tour em 20 segundos" },
 ];
+
+function mobileTabForSlide(id: (typeof mobileSlides)[number]["id"]): CrmTab {
+  if (id === "funnel") return "funnel";
+  if (id === "painel") return "painel";
+  if (id === "video") return "video";
+  return "inbox";
+}
 
 export function PlatformShowcase() {
   const [activeHotspot, setActiveHotspot] = useState<HotspotId>("inbox");
-  const [tab, setTab] = useState<"inbox" | "funnel">("inbox");
+  const [tab, setTab] = useState<CrmTab>("inbox");
   const [mobileIdx, setMobileIdx] = useState(0);
   const reduceMotion = useReducedMotion();
 
@@ -254,6 +292,7 @@ export function PlatformShowcase() {
   }, []);
 
   const activeHint = hotspots.find((h) => h.id === activeHotspot)?.hint;
+  const showHotspots = tab === "inbox" || tab === "funnel";
 
   return (
     <section id="plataforma" className="scroll-mt-24">
@@ -268,40 +307,40 @@ export function PlatformShowcase() {
         real de operação, não só um botão verde.
       </p>
 
-      <PlatformProductVideo />
-
       <div className="mt-10 hidden md:block">
         <div className="relative mx-auto w-full max-w-[960px] overflow-hidden rounded-2xl border border-[rgb(28_25_23/0.1)] bg-surface-raised shadow-[0_24px_64px_rgb(28_25_23/0.12),0_1px_0_rgb(255_255_255/0.9)_inset]">
-          <CrmMock tab={tab} />
-          {hotspots.map((spot) => (
-            <button
-              key={spot.id}
-              type="button"
-              aria-label={spot.label}
-              onClick={() => onHotspot(spot.id)}
-              className={cn(
-                "absolute z-10 flex max-w-[42%] items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50",
-                spot.labelAlign === "left"
-                  ? "-translate-x-full -translate-y-1/2 flex-row-reverse"
-                  : "-translate-y-1/2",
-              )}
-              style={{ left: spot.left, top: spot.top }}
-            >
-              <span
-                className={cn(
-                  "size-3.5 shrink-0 rounded-full border-2 border-white bg-accent shadow-md transition-transform hover:scale-110",
-                  activeHotspot === spot.id && "ring-4 ring-accent/30",
-                )}
-                aria-hidden
-              />
-              <span className="rounded-md bg-white/95 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-ink shadow-sm">
-                {spot.label}
-              </span>
-            </button>
-          ))}
+          <CrmMock tab={tab} onTabChange={setTab} />
+          {showHotspots
+            ? hotspots.map((spot) => (
+                <button
+                  key={spot.id}
+                  type="button"
+                  aria-label={spot.label}
+                  onClick={() => onHotspot(spot.id)}
+                  className={cn(
+                    "absolute z-10 flex max-w-[42%] items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50",
+                    spot.labelAlign === "left"
+                      ? "-translate-x-full -translate-y-1/2 flex-row-reverse"
+                      : "-translate-y-1/2",
+                  )}
+                  style={{ left: spot.left, top: spot.top }}
+                >
+                  <span
+                    className={cn(
+                      "size-3.5 shrink-0 rounded-full border-2 border-white bg-accent shadow-md transition-transform hover:scale-110",
+                      activeHotspot === spot.id && "ring-4 ring-accent/30",
+                    )}
+                    aria-hidden
+                  />
+                  <span className="rounded-md bg-white/95 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-ink shadow-sm">
+                    {spot.label}
+                  </span>
+                </button>
+              ))
+            : null}
         </div>
         <AnimatePresence mode="wait">
-          {activeHint ? (
+          {activeHint && showHotspots ? (
             <motion.p
               key={activeHotspot}
               initial={reduceMotion ? false : { opacity: 0, y: 6 }}
@@ -318,14 +357,18 @@ export function PlatformShowcase() {
       <div className="mt-8 md:hidden">
         <div className="overflow-hidden rounded-2xl border border-line bg-surface-raised shadow-md">
           <CrmMock
-            tab={mobileSlides[mobileIdx]?.id === "funnel" ? "funnel" : "inbox"}
+            tab={mobileTabForSlide(mobileSlides[mobileIdx]!.id)}
+            onTabChange={setTab}
           />
         </div>
         <p className="mt-4 text-center text-base font-medium text-ink">
           {mobileSlides[mobileIdx]?.title}
         </p>
         <p className="mt-2 text-center text-sm text-ink-muted">
-          {hotspots.find((h) => h.id === mobileSlides[mobileIdx]?.id)?.hint}
+          {mobileSlides[mobileIdx]?.id === "video"
+            ? "Visão rápida do produto — dados ilustrativos."
+            : hotspots.find((h) => h.id === mobileSlides[mobileIdx]?.id)?.hint ??
+              "Métricas e funil no mesmo painel."}
         </p>
         <div className="mt-4 flex items-center justify-center gap-4">
           <button

@@ -1,7 +1,6 @@
 import { HomeClientShell } from "@/components/home/HomeClientShell";
 import { HeroPremium } from "@/components/home/HeroPremium";
 import { HomeBelowFoldLazy } from "@/components/home/HomeBelowFoldLazy";
-import { MarqueeSegments } from "@/components/home/MarqueeSegments";
 import { SecurityStrip } from "@/components/home/SecurityStrip";
 import { CtaFinalDark } from "@/components/home/CtaFinalDark";
 import { FAQ } from "@/components/sections/FAQ";
@@ -15,14 +14,49 @@ import { LivePlatformStats } from "@/components/home/LivePlatformStats";
   <HeroPremium />
 </Section>
 
-<Section tone="warm" className="pt-10 md:pt-14" containerClassName="pb-20 md:pb-28">
+<Section tone="warm" className="pt-10 md:pt-14" containerClassName="pb-12 md:pb-16">
   <HomeBelowFoldLazy />
 </Section>
 
-<MarqueeSegments />
-
-<Section tone="petroleum" containerClassName="py-16 md:py-20">
+<Section tone="petroleum" id="faq" containerClassName="py-12 md:py-16">
   <SecurityStrip />
+  <div className="mt-10 border-t border-line-on-dark/40 pt-10 md:mt-12 md:pt-12">
+    <SectionHeader
+      className="[&_h2]:text-ink-on-dark [&_p]:text-ink-muted-on-dark"
+      title="Perguntas que travam a decisão — respondidas de frente."
+      lead="Falta detalhe da sua operação? Agende uma demo e montamos o cenário da sua empresa."
+    />
+    <FAQ
+      className="divide-line-on-dark border-line-on-dark [&_button]:text-ink-on-dark [&_button]:hover:text-accent [&_p]:text-ink-muted-on-dark"
+      items={[
+        {
+          question: "A IA vai falar besteira com meu cliente?",
+          answer:
+            "O agente opera dentro de regras e conteúdo que você aprova. Assuntos sensíveis, exceções e valores fora da tabela disparam revisão humana. Nada de prometer o que sua empresa não pode cumprir.",
+        },
+        {
+          question: "E se o cliente mandar áudio?",
+          answer:
+            "Áudio é transcrito e interpretado como parte da conversa. O fluxo continua com perguntas curtas e confirmação antes de agendar ou passar para o vendedor.",
+        },
+        {
+          question: "Preciso trocar meu número de WhatsApp?",
+          answer:
+            "Não. Trabalhamos com o WhatsApp Business que você já usa. Seus clientes continuam falando com o mesmo contato de sempre.",
+        },
+        {
+          question: "Meus dados ficam seguros?",
+          answer:
+            "Sim. Isolamento entre contas de clientes, criptografia, autenticação reforçada para equipe e trilha de auditoria quando o suporte acessa ambientes autorizados. Políticas publicadas em Privacidade, LGPD e Segurança.",
+        },
+        {
+          question: "Quanto tempo para começar a operar?",
+          answer:
+            "Depende do tamanho do roteiro e integrações. Na demonstração montamos um cronograma realista para o seu caso — sem prazo genérico.",
+        },
+      ]}
+    />
+  </div>
 </Section>
 
 <Futuro flag="mostrarNumeros">
@@ -57,42 +91,6 @@ import { LivePlatformStats } from "@/components/home/LivePlatformStats";
   </Section>
 </Futuro>
 
-<Section id="faq" tone="warm">
-  <SectionHeader
-    title="Perguntas que travam a decisão — respondidas de frente."
-    lead="Falta detalhe da sua operação? Agende uma demo e montamos o cenário da sua empresa."
-  />
-  <FAQ
-    items={[
-      {
-        question: "A IA vai falar besteira com meu cliente?",
-        answer:
-          "O agente opera dentro de regras e conteúdo que você aprova. Assuntos sensíveis, exceções e valores fora da tabela disparam revisão humana. Nada de prometer o que sua empresa não pode cumprir.",
-      },
-      {
-        question: "E se o cliente mandar áudio?",
-        answer:
-          "Áudio é transcrito e interpretado como parte da conversa. O fluxo continua com perguntas curtas e confirmação antes de agendar ou passar para o vendedor.",
-      },
-      {
-        question: "Preciso trocar meu número de WhatsApp?",
-        answer:
-          "Não. Trabalhamos com o WhatsApp Business que você já usa. Seus clientes continuam falando com o mesmo contato de sempre.",
-      },
-      {
-        question: "Meus dados ficam seguros?",
-        answer:
-          "Sim. Isolamento entre contas de clientes, criptografia, autenticação reforçada para equipe e trilha de auditoria quando o suporte acessa ambientes autorizados. Políticas publicadas em Privacidade, LGPD e Segurança.",
-      },
-      {
-        question: "Quanto tempo para começar a operar?",
-        answer:
-          "Depende do tamanho do roteiro e integrações. Na demonstração montamos um cronograma realista para o seu caso — sem prazo genérico.",
-      },
-    ]}
-  />
-</Section>
-
-<Section tone="dark" containerClassName="py-20 md:py-28">
+<Section tone="dark" containerClassName="py-16 md:py-24">
   <CtaFinalDark />
 </Section>

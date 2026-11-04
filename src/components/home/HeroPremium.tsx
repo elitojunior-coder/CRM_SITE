@@ -38,7 +38,7 @@ export function HeroPremium() {
             </Link>
           </div>
         </div>
-        <HeroPhoneLazy className="w-full min-[768px]:max-[1099px]:max-w-[400px] min-[1100px]:justify-self-end" />
+        <HeroPhoneLazy className="w-full min-[768px]:max-[1099px]:max-h-[640px] min-[768px]:max-[1099px]:max-w-[400px] min-[1100px]:justify-self-end" />
       </div>
     </div>
   );

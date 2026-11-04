@@ -247,12 +247,15 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
   return (
     <div className={cn("relative flex flex-col items-center gap-3", className)}>
       <div className="flex w-full max-w-[640px] flex-col items-center justify-center gap-3 min-[1100px]:flex-row min-[1100px]:items-start min-[1100px]:gap-4">
-        <Iphone className="mx-auto w-[min(100%,360px)] max-w-[400px] drop-shadow-[0_32px_64px_rgb(0_0_0/0.45)] min-[1100px]:w-[272px] min-[1100px]:max-w-[272px]">
+        <Iphone
+          className="mx-auto w-[min(100%,360px)] max-w-[400px] drop-shadow-[0_32px_64px_rgb(0_0_0/0.45)] min-[768px]:max-[1099px]:aspect-auto min-[768px]:max-[1099px]:h-[640px] min-[768px]:max-[1099px]:w-[min(100%,320px)] min-[1100px]:aspect-[433/882] min-[1100px]:h-auto min-[1100px]:w-[272px] min-[1100px]:max-w-[272px]"
+        >
           <WhatsAppPhoneShell
             size="hero"
             name={`Demo · ${segment.label}`}
             status="online · IA roteirizada"
             footer={footer}
+            className="h-full min-h-0"
           >
             {lines.map((line) =>
               line.role === "slot" ? (

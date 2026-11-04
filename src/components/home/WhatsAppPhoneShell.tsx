@@ -67,7 +67,7 @@ export function WhatsAppPhoneShell({
             backgroundSize: "260px 260px, auto, auto",
           }}
         >
-          <div className="absolute inset-0 flex flex-col justify-start gap-2 overflow-y-auto overflow-x-hidden p-3 pb-2 pt-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="absolute inset-0 flex flex-col justify-end gap-2 overflow-y-auto overflow-x-hidden p-3 pb-2 pt-2 min-[768px]:max-[1099px]:justify-end [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {children}
           </div>
         </div>

@@ -3,11 +3,12 @@
 import { useRef } from "react";
 import { HomeTitle } from "@/components/home/HomeTitle";
 import { AnimatedBeam } from "@/components/ui/animated-beam";
+
 const stations = [
   {
     id: "whatsapp",
-    title: "WhatsApp / site",
-    body: "Cliente manda texto, áudio ou clica no widget.",
+    title: "Conecta seu número",
+    body: "Mantém o WhatsApp Business que você já usa. Filas, horários e regras da equipe.",
     mini: (
       <div className="rounded-lg bg-[#ECE5DD] p-2 text-[10px] text-[#111]">
         <div className="ml-auto max-w-[90%] rounded-lg rounded-br-sm bg-[#DCF8C6] px-2 py-1">
@@ -18,8 +19,8 @@ const stations = [
   },
   {
     id: "ia",
-    title: "IA",
-    body: "Entende intenção, transcreve áudio e responde em segundos.",
+    title: "A IA atende e entende áudio",
+    body: "Responde em segundos, transcreve áudio e mantém o tom da sua marca.",
     mini: (
       <div className="space-y-1 rounded-lg border border-line bg-white p-2 text-[10px] text-on-light">
         <p className="font-medium text-accent">Intenção: agendar</p>
@@ -29,8 +30,8 @@ const stations = [
   },
   {
     id: "funil",
-    title: "Funil",
-    body: "Card qualificado com valor, urgência e etapa.",
+    title: "Qualifica e registra no funil",
+    body: "Etiquetas, temperatura e próximo passo — sem planilha paralela.",
     mini: (
       <div className="card-dark-glow rounded-lg p-2 text-[10px] text-ink-on-dark">
         <p className="font-medium text-accent">Qualificado</p>
@@ -40,8 +41,8 @@ const stations = [
   },
   {
     id: "vendedor",
-    title: "Vendedor",
-    body: "Resumo pronto — um clique para assumir a conversa.",
+    title: "Passa para o humano com resumo",
+    body: "Vendedor entra com contexto, intenção e horário sugerido.",
     mini: (
       <div className="rounded-lg border border-line bg-white p-2 text-[10px] text-on-light">
         <p className="font-medium text-ink">Resumo do lead</p>
@@ -80,7 +81,7 @@ export function MessagePath() {
   const refs = [ref0, ref1, ref2, ref3];
 
   return (
-    <div id="caminho-mensagem" className="scroll-mt-24 py-8 md:py-12">
+    <div id="caminho-mensagem" className="scroll-mt-24 py-6 md:py-10">
       <HomeTitle
         as="h2"
         text="O caminho da mensagem."

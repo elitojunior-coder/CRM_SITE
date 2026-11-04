@@ -179,8 +179,8 @@ export function BentoFeatures() {
         accentWords={["venda"]}
         className="text-3xl md:text-5xl"
       />
-      <BentoGrid className="mt-10 auto-rows-[minmax(180px,auto)] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-4">
-        {items.map((item) => (
+      <BentoGrid className="mt-10 auto-rows-[minmax(180px,auto)] grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-4">
+        {items.map((item, index) => (
           <MagicCard
             key={item.key}
             gradientFrom="#ff5b2e"
@@ -188,18 +188,20 @@ export function BentoFeatures() {
             gradientColor="rgb(255 91 46 / 0.08)"
             gradientOpacity={0.65}
             className={cn(
-              "card-premium rounded-2xl bg-surface-raised shadow-sm",
+              "card-premium overflow-hidden rounded-2xl bg-surface-raised shadow-sm",
               item.span,
             )}
           >
-            <article className="relative flex h-full flex-col rounded-[inherit] p-5">
-              <BorderBeam
-                size={120}
-                duration={8}
-                colorFrom="#ff5b2e"
-                colorTo="#0e3b43"
-                borderWidth={1.5}
-              />
+            <article className="relative flex h-full flex-col overflow-hidden rounded-[inherit] p-5">
+              {index < items.length - 1 ? (
+                <BorderBeam
+                  size={120}
+                  duration={8}
+                  colorFrom="#ff5b2e"
+                  colorTo="#0e3b43"
+                  borderWidth={1.5}
+                />
+              ) : null}
               <MiniVisual kind={item.key} />
               <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-ink">
                 {item.title}

@@ -72,6 +72,7 @@ export const brand = {
     mostrarChatDoSite: false,
     mostrarSelosMeta: false,
     mostrarSelosLgpd: false,
+    mostrarCasos: false,
   },
 } as const;
 

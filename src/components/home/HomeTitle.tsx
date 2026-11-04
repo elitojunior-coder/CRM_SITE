@@ -29,34 +29,12 @@ export function HomeTitle({
   );
 
   if (reduceMotion) {
-    return (
-      <Tag className={base}>
-        {words.map((word, i) => {
-          const clean = word.replace(/[.,!?;:]/g, "");
-          const accent = accentWords.some(
-            (w) => w.toLowerCase() === clean.toLowerCase(),
-          );
-          return (
-            <span key={`${word}-${i}`}>
-              {accent ? (
-                <em className="font-display not-italic text-accent italic">
-                  {word}
-                </em>
-              ) : (
-                word
-              )}
-              {i < words.length - 1 ? " " : ""}
-            </span>
-          );
-        })}
-      </Tag>
-    );
+    return <Tag className={base}>{text}</Tag>;
   }
 
   return (
     <Tag className={base} aria-label={text}>
-      <span className="sr-only">{text}</span>
-      <span aria-hidden>
+      <span aria-hidden="true">
         {words.map((word, i) => {
           const clean = word.replace(/[.,!?;:]/g, "");
           const accent = accentWords.some(
@@ -66,7 +44,7 @@ export function HomeTitle({
             <motion.span
               key={`${word}-${i}`}
               className={cn(
-                "mr-[0.22em] inline-block",
+                "inline-block",
                 accent && "font-display italic text-accent",
               )}
               initial={{ opacity: 0, y: 10 }}
@@ -79,6 +57,7 @@ export function HomeTitle({
               }}
             >
               {word}
+              {i < words.length - 1 ? " " : ""}
             </motion.span>
           );
         })}
