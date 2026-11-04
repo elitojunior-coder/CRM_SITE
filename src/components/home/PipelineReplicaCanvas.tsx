@@ -1,11 +1,8 @@
 import {
   ArrowsClockwise,
   Funnel,
-  Globe,
-  InstagramLogo,
   MagnifyingGlass,
   SlidersHorizontal,
-  WhatsappLogo,
 } from "@phosphor-icons/react/dist/ssr";
 import {
   columnTotals,
@@ -13,98 +10,20 @@ import {
   pipelineColumns,
   pipelineFunnels,
   type PipelineCard,
-  type PipelineChannel,
 } from "../../../content/demo/pipeline";
+import { PipelineCardView } from "@/components/home/PipelineReplicaCard";
 import { cn } from "@/lib/cn";
 import {
   PIPELINE_CANVAS_SIZE,
   PIPELINE_SIDEBAR_W,
 } from "@/components/home/pipeline-layout";
 
-function ChannelIcon({ channel }: { channel: PipelineChannel }) {
-  const cls = "size-3.5 shrink-0 opacity-70";
-  if (channel === "whatsapp") return <WhatsappLogo className={cls} weight="fill" />;
-  if (channel === "instagram") return <InstagramLogo className={cls} weight="fill" />;
-  return <Globe className={cls} weight="duotone" />;
-}
-
-function PipelineCardView({ card }: { card: PipelineCard }) {
-  return (
-    <article
-      data-pipeline-card={card.id}
-      data-pipeline-column={card.columnId}
-      className="pipeline-card rounded-lg border border-[#e8e4dc] bg-white p-2.5 shadow-[0_1px_0_rgba(15,23,42,0.04)]"
-    >
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-2">
-          <span
-            className="flex size-7 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold text-white"
-            style={{ backgroundColor: card.avatarColor }}
-          >
-            {card.initials}
-          </span>
-          <div className="min-w-0">
-            <p className="truncate text-[12px] font-semibold leading-tight text-[#1c1917]">
-              {card.name}
-            </p>
-            <p className="text-[12px] font-medium text-[#57534e]">
-              {formatPipelineBrl(card.valueCents)}
-            </p>
-          </div>
-        </div>
-        <ChannelIcon channel={card.channel} />
-      </div>
-      <div className="mt-2 flex flex-wrap gap-1">
-        {card.tags.map((tag) => (
-          <span
-            key={tag}
-            className="rounded bg-[#f5f2eb] px-1.5 py-0.5 text-[10px] font-medium text-[#57534e]"
-          >
-            {tag}
-          </span>
-        ))}
-        {card.aiHandled ? (
-          <span className="rounded bg-[#FF5B2E]/12 px-1.5 py-0.5 text-[10px] font-semibold text-[#E84E24]">
-            IA
-          </span>
-        ) : null}
-        {card.newMessagePulse ? (
-          <span
-            data-pipeline-pulse="new-message"
-            className="rounded bg-[#0E3B43]/10 px-1.5 py-0.5 text-[10px] font-semibold text-[#0E3B43]"
-          >
-            nova mensagem
-          </span>
-        ) : null}
-        {card.aiResponding ? (
-          <span
-            data-pipeline-pulse="ai-typing"
-            className="rounded bg-[#FF5B2E]/10 px-1.5 py-0.5 text-[10px] font-semibold text-[#E84E24]"
-          >
-            IA respondendo…
-          </span>
-        ) : null}
-      </div>
-      <div className="mt-2 flex items-center justify-between gap-2 text-[11px] text-[#78716c]">
-        <span>{card.timeAgo}</span>
-        <span
-          className="flex size-6 items-center justify-center rounded-full text-[10px] font-semibold text-white"
-          style={{ backgroundColor: card.ownerColor }}
-          title="Responsável"
-        >
-          {card.ownerInitials}
-        </span>
-      </div>
-    </article>
-  );
-}
-
 type Props = {
   cards: PipelineCard[];
-  hiddenCardId?: string | null;
+  draggingCardId?: string | null;
 };
 
-export function PipelineReplicaCanvas({ cards, hiddenCardId }: Props) {
+export function PipelineReplicaCanvas({ cards, draggingCardId }: Props) {
   return (
     <div
       className="pipeline-board flex shrink-0 flex-col bg-[#f3f1ec] text-[#1c1917]"
@@ -176,9 +95,7 @@ export function PipelineReplicaCanvas({ cards, hiddenCardId }: Props) {
           </aside>
           <div className="grid min-h-0 flex-1 grid-cols-5 gap-0 overflow-hidden">
             {pipelineColumns.map((col) => {
-              const inCol = cards.filter(
-                (c) => c.columnId === col.id && c.id !== hiddenCardId,
-              );
+              const inCol = cards.filter((c) => c.columnId === col.id);
               const totals = columnTotals(cards, col.id);
               return (
                 <div
@@ -192,9 +109,13 @@ export function PipelineReplicaCanvas({ cards, hiddenCardId }: Props) {
                       {totals.count} · {formatPipelineBrl(totals.totalCents)}
                     </p>
                   </div>
-                  <div className="flex flex-col gap-2 p-2">
+                  <div className="flex flex-col gap-2 p-2" data-pipeline-column-list>
                     {inCol.map((card) => (
-                      <PipelineCardView key={card.id} card={card} />
+                      <PipelineCardView
+                        key={card.id}
+                        card={card}
+                        dragging={draggingCardId === card.id}
+                      />
                     ))}
                   </div>
                 </div>

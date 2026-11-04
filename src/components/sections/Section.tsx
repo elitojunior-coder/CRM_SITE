@@ -64,9 +64,9 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   return (
-    <header
+    <div
       className={cn(
-        "mb-10 md:mb-14",
+        "mb-10 w-full min-w-0 md:mb-14",
         align === "wide" && "max-w-3xl",
         className,
       )}
@@ -78,15 +78,15 @@ export function SectionHeader({
       ) : null}
       <h2
         id={id}
-        className="font-display text-balance text-3xl leading-tight text-ink md:text-4xl lg:text-[2.75rem]"
+        className="w-full max-w-none text-pretty font-display text-3xl leading-tight text-ink md:text-4xl lg:text-[2.75rem]"
       >
         {title}
       </h2>
       {lead ? (
-        <p className="mt-4 max-w-2xl text-pretty text-lg leading-relaxed text-ink-muted">
+        <p className="mt-4 w-full max-w-2xl text-pretty text-lg leading-relaxed text-ink-muted">
           {lead}
         </p>
       ) : null}
-    </header>
+    </div>
   );
 }

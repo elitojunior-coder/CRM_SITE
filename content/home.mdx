@@ -18,11 +18,11 @@ import { LivePlatformStats } from "@/components/home/LivePlatformStats";
   <HomeBelowFold />
 </Section>
 
-<Section tone="petroleum" id="faq" containerClassName="py-12 md:py-16">
+<Section tone="petroleum" id="faq" className="overflow-x-clip" containerClassName="py-12 md:py-16">
   <SecurityStrip />
-  <div className="mt-10 border-t border-line-on-dark/40 pt-10 md:mt-12 md:pt-12">
+  <div className="relative z-10 mt-10 w-full min-w-0 border-t border-line-on-dark/40 pt-10 md:mt-12 md:pt-12">
     <SectionHeader
-      className="[&_h2]:text-ink-on-dark [&_p]:text-ink-muted-on-dark"
+      className="max-w-none [&_h2]:text-ink-on-dark [&_p]:text-ink-muted-on-dark"
       title="Perguntas que travam a decisão — respondidas de frente."
       lead="Falta detalhe da sua operação? Agende uma demo e montamos o cenário da sua empresa."
     />

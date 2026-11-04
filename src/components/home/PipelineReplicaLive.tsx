@@ -2,13 +2,14 @@
 
 import { useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
-  formatPipelineBrl,
   pipelineCards as initialPipelineCards,
   pipelineDragSequence,
   type PipelineCard,
 } from "../../../content/demo/pipeline";
 import { PipelineReplicaCanvas } from "@/components/home/PipelineReplicaCanvas";
+import { PipelineCardView } from "@/components/home/PipelineReplicaCard";
 import {
   PIPELINE_CANVAS_SIZE,
   PIPELINE_MOBILE_VISIBLE_W,
@@ -19,10 +20,23 @@ const LOOP_MS = 12000;
 const STEP_MS = 3000;
 const MIN_TEXT_PX = 9;
 const BASE_TEXT_PX = 12;
+const GHOST_W = 220;
+const GHOST_H = 98;
 
 function cloneCards(cards: PipelineCard[]) {
   return cards.map((c) => ({ ...c }));
 }
+
+type Point = { x: number; y: number };
+
+type OverlayState = {
+  visible: boolean;
+  ghostX: number;
+  ghostY: number;
+  cursorX: number;
+  cursorY: number;
+  card: PipelineCard | null;
+};
 
 export function PipelineReplicaLive() {
   const reduceMotion = useReducedMotion();
@@ -32,20 +46,30 @@ export function PipelineReplicaLive() {
   const [scale, setScale] = useState(1);
   const [inView, setInView] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const [hiddenCardId, setHiddenCardId] = useState<string | null>(null);
-  const [cursor, setCursor] = useState<{ x: number; y: number; visible: boolean }>({
-    x: 0,
-    y: 0,
+  const [draggingCardId, setDraggingCardId] = useState<string | null>(null);
+  const [overlay, setOverlay] = useState<OverlayState>({
     visible: false,
+    ghostX: 0,
+    ghostY: 0,
+    cursorX: 0,
+    cursorY: 0,
+    card: null,
   });
-  const [dragGhost, setDragGhost] = useState<{
-    visible: boolean;
-    x: number;
-    y: number;
-    card: PipelineCard | null;
-  }>({ visible: false, x: 0, y: 0, card: null });
+  const [overlayMounted, setOverlayMounted] = useState(false);
+
+  useEffect(() => {
+    setOverlayMounted(true);
+  }, []);
+
   const cardsRef = useRef(cards);
   cardsRef.current = cards;
+
+  const animRef = useRef({
+    stepKey: -1,
+    from: null as Point | null,
+    drop: null as Point | null,
+    card: null as PipelineCard | null,
+  });
 
   const updateScale = useCallback(() => {
     const el = viewportRef.current;
@@ -91,10 +115,20 @@ export function PipelineReplicaLive() {
     if (reduceMotion || !inView) return;
 
     let cancelled = false;
-    let lastHidden: string | null = null;
     let lastCommittedStep = -1;
     let lastResetLoop = -1;
+    let lastDragging: string | null = null;
     const start = performance.now();
+
+    const boardToViewport = (canvasX: number, canvasY: number) => {
+      const board = rootRef.current?.querySelector(".pipeline-board");
+      if (!board) return null;
+      const br = board.getBoundingClientRect();
+      return {
+        x: br.left + canvasX * scale,
+        y: br.top + canvasY * scale,
+      };
+    };
 
     const measureCard = (cardId: string) => {
       const board = rootRef.current?.querySelector(".pipeline-board");
@@ -110,17 +144,18 @@ export function PipelineReplicaLive() {
       };
     };
 
-    const measureColumnCenter = (columnId: string) => {
+    const measureColumnDrop = (columnId: string) => {
       const board = rootRef.current?.querySelector(".pipeline-board");
       const col = rootRef.current?.querySelector(
         `[data-pipeline-column="${columnId}"]`,
       ) as HTMLElement | null;
-      if (!board || !col) return null;
+      const list = col?.querySelector("[data-pipeline-column-list]");
+      if (!board || !col || !list) return null;
       const br = board.getBoundingClientRect();
-      const cr = col.getBoundingClientRect();
+      const lr = list.getBoundingClientRect();
       return {
-        x: (cr.left - br.left + cr.width / 2) / scale,
-        y: (cr.top - br.top + 120) / scale,
+        x: (col.getBoundingClientRect().left - br.left + col.clientWidth / 2) / scale,
+        y: (lr.top - br.top + 36) / scale,
       };
     };
 
@@ -131,31 +166,48 @@ export function PipelineReplicaLive() {
       const elapsedInLoop = elapsed % LOOP_MS;
       const stepIndex = Math.floor(elapsedInLoop / STEP_MS) % pipelineDragSequence.length;
       const phase = (elapsedInLoop % STEP_MS) / STEP_MS;
+      const seq = pipelineDragSequence[stepIndex];
+      if (!seq) {
+        requestAnimationFrame(tick);
+        return;
+      }
+      const stepKey = loopIndex * 100 + stepIndex;
 
       if (loopIndex > lastResetLoop && elapsedInLoop < 120) {
         lastResetLoop = loopIndex;
         lastCommittedStep = -1;
-        lastHidden = null;
+        animRef.current = { stepKey: -1, from: null, drop: null, card: null };
         setCards(cloneCards(initialPipelineCards));
-        setHiddenCardId(null);
+        setDraggingCardId(null);
+        lastDragging = null;
       }
 
-      const seq = pipelineDragSequence[stepIndex];
-      const card = cardsRef.current.find((c) => c.id === seq.cardId) ?? null;
-      const from = measureCard(seq.cardId);
-      const to = measureColumnCenter(seq.to);
-
-      const shouldHide = phase > 0.12 && phase < 0.88 ? seq.cardId : null;
-      if (shouldHide !== lastHidden) {
-        lastHidden = shouldHide;
-        setHiddenCardId(shouldHide);
+      if (animRef.current.stepKey !== stepKey) {
+        animRef.current.stepKey = stepKey;
+        animRef.current.from = measureCard(seq.cardId);
+        animRef.current.drop = measureColumnDrop(seq.to);
+        animRef.current.card =
+          cardsRef.current.find((c) => c.id === seq.cardId) ?? null;
       }
 
-      const stepKey = loopIndex * pipelineDragSequence.length + stepIndex;
-      if (phase >= 0.88 && lastCommittedStep !== stepKey) {
+      if (phase < 0.14) {
+        const fresh = measureCard(seq.cardId);
+        if (fresh) animRef.current.from = fresh;
+        animRef.current.drop = measureColumnDrop(seq.to) ?? animRef.current.drop;
+        animRef.current.card =
+          cardsRef.current.find((c) => c.id === seq.cardId) ?? animRef.current.card;
+      }
+
+      const shouldDrag = phase > 0.14 && phase < 0.9 ? seq.cardId : null;
+      if (shouldDrag !== lastDragging) {
+        lastDragging = shouldDrag;
+        setDraggingCardId(shouldDrag);
+      }
+
+      if (phase >= 0.9 && lastCommittedStep !== stepKey) {
         lastCommittedStep = stepKey;
-        setHiddenCardId(null);
-        lastHidden = null;
+        setDraggingCardId(null);
+        lastDragging = null;
         setCards((prev) =>
           prev.map((c) =>
             c.id === seq.cardId ? { ...c, columnId: seq.to } : c,
@@ -163,21 +215,32 @@ export function PipelineReplicaLive() {
         );
       }
 
-      if (from && to) {
-        const t = phase < 0.15 ? 0 : phase > 0.85 ? 1 : (phase - 0.15) / 0.7;
+      const from = animRef.current.from;
+      const to = animRef.current.drop;
+      const card = animRef.current.card;
+
+      if (from && to && card) {
+        const t = phase < 0.14 ? 0 : phase > 0.9 ? 1 : (phase - 0.14) / 0.68;
         const ease = t * t * (3 - 2 * t);
-        const x = from.x + (to.x - from.x) * ease;
-        const y = from.y + (to.y - from.y) * ease;
-        setCursor({ x, y, visible: phase > 0.05 && phase < 0.95 });
-        setDragGhost({
-          visible: phase > 0.12 && phase < 0.88,
-          x: x - 100,
-          y: y - 28,
-          card,
-        });
+        const cx = from.x + (to.x - from.x) * ease;
+        const cy = from.y + (to.y - from.y) * ease;
+        const showDrag = phase > 0.14 && phase < 0.9;
+        const pointer = boardToViewport(cx, cy);
+
+        if (pointer) {
+          setOverlay({
+            visible: showDrag,
+            cursorX: pointer.x - 2,
+            cursorY: pointer.y - 2,
+            ghostX: pointer.x - (GHOST_W * scale) / 2,
+            ghostY: pointer.y - (GHOST_H * scale) / 2,
+            card,
+          });
+        }
       } else {
-        setCursor((c) => ({ ...c, visible: false }));
-        setDragGhost((g) => ({ ...g, visible: false, card: null }));
+        setOverlay((o) =>
+          o.visible ? { ...o, visible: false, card: null } : o,
+        );
       }
 
       requestAnimationFrame(tick);
@@ -214,46 +277,56 @@ export function PipelineReplicaLive() {
                 : undefined
             }
           >
-            <PipelineReplicaCanvas cards={cards} hiddenCardId={hiddenCardId} />
+            <PipelineReplicaCanvas cards={cards} draggingCardId={draggingCardId} />
           </div>
-          {!reduceMotion && inView ? (
-            <>
-              {dragGhost.visible && dragGhost.card ? (
+        </div>
+      </div>
+      {!reduceMotion && inView && overlayMounted
+        ? createPortal(
+            <div
+              className="pointer-events-none fixed inset-0 z-[9999] overflow-visible"
+              aria-hidden
+            >
+              {overlay.visible && overlay.card ? (
                 <div
-                  className="absolute z-20 w-[200px] rounded-lg border border-[#e8e4dc] bg-white/95 p-2.5 shadow-lg"
-                  style={{ left: dragGhost.x, top: dragGhost.y }}
+                  data-pipeline-drag-ghost
+                  className="fixed shadow-[0_16px_40px_rgba(15,23,42,0.22)]"
+                  style={{
+                    left: overlay.ghostX,
+                    top: overlay.ghostY,
+                    width: GHOST_W,
+                    transform: `scale(${scale}) rotate(1.5deg)`,
+                    transformOrigin: "top left",
+                  }}
                 >
-                  <p className="truncate text-[12px] font-semibold text-[#1c1917]">
-                    {dragGhost.card.name}
-                  </p>
-                  <p className="text-[12px] font-medium text-[#57534e]">
-                    {formatPipelineBrl(dragGhost.card.valueCents)}
-                  </p>
+                  <PipelineCardView
+                    card={overlay.card}
+                    className="bg-white ring-2 ring-[#FF5B2E]/35"
+                  />
                 </div>
               ) : null}
               <svg
                 className={cn(
-                  "absolute z-30 text-[#1c1917] drop-shadow-md transition-opacity",
-                  cursor.visible ? "opacity-100" : "opacity-0",
+                  "fixed text-[#1c1917] drop-shadow-md",
+                  overlay.visible ? "opacity-100" : "opacity-0",
                 )}
-                width="28"
-                height="28"
+                width={28 * scale}
+                height={28 * scale}
                 viewBox="0 0 24 24"
                 style={{
-                  left: cursor.x - 2,
-                  top: cursor.y - 2,
+                  left: overlay.cursorX,
+                  top: overlay.cursorY,
                 }}
-                aria-hidden
               >
                 <path
                   fill="currentColor"
                   d="M5.5 2.5l12 8.5-5.5.5 3 7.5-2.5 1.5-3-7.5-4.5 1.5z"
                 />
               </svg>
-            </>
-          ) : null}
-        </div>
-      </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }

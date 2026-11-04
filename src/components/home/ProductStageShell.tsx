@@ -34,7 +34,9 @@ export function ProductStageShell({ children, className }: Props) {
           className="relative overflow-hidden rounded-[18px] border border-white/10 bg-[#121416]/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-24px_48px_rgba(0,0,0,0.35),0_24px_80px_rgba(0,0,0,0.45)]"
           style={{ aspectRatio: "16 / 10" }}
         >
-          <div className="absolute inset-0 overflow-hidden rounded-[17px]">{children}</div>
+          <div className="absolute inset-0 rounded-[17px] [clip-path:inset(0_round_17px)]">
+            {children}
+          </div>
         </div>
       </motion.div>
     </div>

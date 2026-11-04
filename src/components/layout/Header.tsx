@@ -48,6 +48,7 @@ export function Header() {
 
   return (
     <header
+      data-site-header
       data-compact={homeNav && compact ? "true" : undefined}
       className={cn(
         "fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-surface/90 backdrop-blur-sm",
