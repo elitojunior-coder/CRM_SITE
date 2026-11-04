@@ -1,7 +1,8 @@
 import { brand } from "@/config/brand";
+import { HeroBackdrop } from "@/components/home/HeroBackdrop";
 import { HeroGrainCanvas } from "@/components/home/HeroGrainCanvas";
 import { HeroPhoneLazy } from "@/components/home/HeroPhoneLazy";
-import { HeroSpotlight } from "@/components/home/HeroSpotlight";
+import { HeroSubtitleRotate } from "@/components/home/HeroSubtitleRotate";
 import { MagneticButton } from "@/components/home/MagneticButton";
 import Link from "next/link";
 
@@ -11,23 +12,19 @@ export function HeroPremium() {
     : brand.contact.agendamentoUrl;
 
   return (
-    <div className="relative z-[2] w-full overflow-hidden">
-      <HeroSpotlight />
+    <div className="relative isolate w-full">
+      <HeroBackdrop />
       <HeroGrainCanvas />
-      <div className="mx-auto grid w-full max-w-[1280px] items-center gap-12 px-5 md:px-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
+      <div className="relative z-10 mx-auto grid w-full max-w-[1280px] items-center gap-6 px-5 md:px-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-8 lg:items-start">
         <div className="max-w-xl lg:max-w-none">
-          <h1 className="text-balance font-sans text-[2.65rem] font-semibold leading-[1.04] tracking-tight text-ink-on-dark md:text-6xl lg:text-[4.25rem] xl:text-[5rem]">
+          <h1 className="text-balance font-sans text-[2.65rem] font-semibold leading-[1.04] tracking-tight text-[#f5f2eb] md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
             Quem responde primeiro,{" "}
             <em className="font-display text-[1.05em] font-normal italic text-accent">
               vende.
             </em>
           </h1>
-          <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-ink-muted-on-dark md:text-xl md:leading-relaxed">
-            Agentes de IA que atendem no seu WhatsApp e no seu site em segundos:
-            entendem áudio, qualificam, agendam e passam para o seu time com tudo
-            resumido.
-          </p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <HeroSubtitleRotate />
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <MagneticButton href={agendarHref} className="cta-glow">
               Agendar demonstração
             </MagneticButton>

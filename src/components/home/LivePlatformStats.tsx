@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { brand } from "@/config/brand";
-import NumberFlow from "@number-flow/react";
+import { NumberTicker } from "@/components/ui/number-ticker";
 
 type StatsPayload = {
   conversasUltimos30Dias?: number;
@@ -47,7 +47,7 @@ export function LivePlatformStats() {
         >
           <p className="text-sm text-ink-muted">{item.label}</p>
           <p className="mt-2 font-sans text-3xl font-semibold tabular-nums text-ink">
-            <NumberFlow value={item.value!} />
+            <NumberTicker value={item.value!} />
           </p>
         </div>
       ))}

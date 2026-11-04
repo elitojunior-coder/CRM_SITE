@@ -8,8 +8,11 @@ export { PHONE_ASPECT };
 
 type PhoneSize = "hero" | "story";
 
+const WHATSAPP_WALLPAPER =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%23c5b8a8' fill-opacity='0.14'%3E%3Cpath d='M40 20h8v8h-8zM120 60h6v6h-6zM200 140h8v8h-8zM80 200h6v6h-6zM180 40h5v5h-5z'/%3E%3C/g%3E%3C/svg%3E\")";
+
 const widthBySize: Record<PhoneSize, string> = {
-  hero: "w-[min(100%,340px)] lg:w-[400px]",
+  hero: "h-full w-full",
   story: "w-[min(100%,340px)] lg:w-[390px]",
 };
 
@@ -33,18 +36,21 @@ export function WhatsAppPhoneShell({
   return (
     <div
       className={cn(
-        "relative mx-auto shrink-0 rounded-[2.4rem] border border-white/10 bg-[#111] p-2 shadow-[0_40px_80px_rgb(0_0_0/0.55)]",
+        "relative mx-auto flex h-full min-h-0 w-full shrink-0 flex-col overflow-hidden bg-[#ECE5DD]",
+        size === "hero" ? "" : "rounded-[2.4rem] border border-white/10 bg-[#111] p-2 shadow-[0_40px_80px_rgb(0_0_0/0.55)]",
         widthBySize[size],
         className,
       )}
-      style={{ aspectRatio: PHONE_ASPECT, height: "auto" }}
+      style={size === "hero" ? undefined : { aspectRatio: PHONE_ASPECT, height: "auto" }}
       aria-hidden={false}
     >
-      <div
-        className="absolute left-1/2 top-2.5 z-20 h-6 w-[5.5rem] -translate-x-1/2 rounded-full bg-black/85"
-        aria-hidden
-      />
-      <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[2rem] bg-[#ECE5DD]">
+      {size !== "hero" ? (
+        <div
+          className="absolute left-1/2 top-2.5 z-20 h-6 w-[5.5rem] -translate-x-1/2 rounded-full bg-black/85"
+          aria-hidden
+        />
+      ) : null}
+      <div className={cn("flex h-full min-h-0 flex-col overflow-hidden bg-[#ECE5DD]", size !== "hero" && "rounded-[2rem]")}>
         <div className="relative z-10 shrink-0 bg-[#075E54] px-3.5 pb-2.5 pt-9 text-white">
           <div className="flex items-center gap-2.5">
             <div className="size-9 shrink-0 rounded-full bg-[#128C7E]/80 ring-2 ring-white/20" />
@@ -57,11 +63,11 @@ export function WhatsAppPhoneShell({
         <div
           className="relative min-h-0 flex-1 overflow-hidden bg-[#ECE5DD]"
           style={{
-            backgroundImage:
-              "radial-gradient(circle at 20% 30%, rgb(255 255 255 / 0.35) 0%, transparent 45%), radial-gradient(circle at 80% 70%, rgb(0 0 0 / 0.04) 0%, transparent 40%)",
+            backgroundImage: `${WHATSAPP_WALLPAPER}, radial-gradient(circle at 20% 30%, rgb(255 255 255 / 0.28) 0%, transparent 45%), radial-gradient(circle at 80% 70%, rgb(0 0 0 / 0.03) 0%, transparent 40%)`,
+            backgroundSize: "260px 260px, auto, auto",
           }}
         >
-          <div className="absolute inset-x-0 bottom-0 top-0 flex flex-col justify-end gap-2 overflow-hidden p-3 pb-2">
+          <div className="absolute inset-0 flex flex-col justify-start gap-2 overflow-y-auto overflow-x-hidden p-3 pb-2 pt-2">
             {children}
           </div>
         </div>
@@ -97,15 +103,15 @@ export function ChatBubble({
         "max-w-[92%] shrink-0 rounded-2xl px-3 py-2 text-[12px] leading-snug shadow-sm will-change-[transform,opacity]",
         side === "out"
           ? "ml-auto rounded-br-md bg-[#DCF8C6] text-[#111]"
-          : "mr-auto rounded-bl-md border border-[#000]/5 bg-white text-on-light text-[#111]",
+          : "chat-bubble-light mr-auto rounded-bl-md border border-[#000]/5 bg-white text-[#111]",
         className,
       )}
     >
-      {children}
+      <div className={side === "in" ? "text-[#111]" : undefined}>{children}</div>
       <div
         className={cn(
           "mt-1 flex items-center justify-end gap-1 text-[10px]",
-          side === "out" ? "text-[#667781]" : "text-ink-subtle",
+          side === "out" ? "text-[#667781]" : "text-[#667781]",
         )}
       >
         <span className="tabular-nums">{time}</span>

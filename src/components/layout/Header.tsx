@@ -62,26 +62,34 @@ export function Header() {
         </Link>
 
         <nav
-          className="hidden items-center gap-6 lg:flex lg:gap-8"
+          className="hidden min-[1100px]:flex min-[1100px]:items-center min-[1100px]:gap-6 min-[1100px]:gap-8"
           aria-label="Principal"
         >
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm text-ink-muted transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              className={cn(
+                "whitespace-nowrap text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2",
+                homeNav
+                  ? "text-ink-muted-on-dark hover:text-ink-on-dark focus-visible:ring-offset-surface-dark"
+                  : "text-ink-muted hover:text-ink focus-visible:ring-offset-surface",
+              )}
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-2 min-[1100px]:flex">
           <WhatsAppLink
             id="whatsapp-vendas-header"
             data-header-secondary
             className={cn(
-              "inline-flex items-center justify-center rounded-md border border-line bg-surface-raised px-4 py-2 text-sm font-medium text-ink transition-colors hover:border-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+              "header-whatsapp-cta inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2",
+              homeNav
+                ? "border-[rgb(245_242_235/0.55)] bg-transparent text-ink-on-dark shadow-[inset_0_0_0_1px_rgb(245_242_235/0.35)] hover:border-[rgb(245_242_235/0.75)] hover:bg-white/8 focus-visible:ring-offset-surface-dark"
+                : "border-line bg-transparent text-ink shadow-[inset_0_0_0_1px_rgb(28_25_23/0.12)] hover:border-ink-muted hover:bg-surface-muted focus-visible:ring-offset-surface",
             )}
           >
             Falar no WhatsApp
@@ -91,13 +99,13 @@ export function Header() {
 
         <Dialog.Root open={open} onOpenChange={setOpen}>
           <Dialog.Trigger asChild>
-            <IconButton className="header-menu-trigger lg:hidden" aria-label="Abrir menu">
+            <IconButton className="header-menu-trigger min-[1100px]:hidden" aria-label="Abrir menu">
               <List size={22} weight="regular" />
             </IconButton>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay className="fixed inset-0 z-50 bg-ink/40 lg:hidden" />
-            <Dialog.Content className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,20rem)] flex-col bg-surface p-5 shadow-xl focus:outline-none lg:hidden">
+            <Dialog.Overlay className="fixed inset-0 z-50 bg-ink/40 min-[1100px]:hidden" />
+            <Dialog.Content className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,20rem)] flex-col bg-surface p-5 shadow-xl focus:outline-none min-[1100px]:hidden">
               <div className="mb-6 flex items-center justify-between">
                 <Dialog.Title className="font-display text-lg">
                   Menu

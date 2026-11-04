@@ -1,6 +1,6 @@
 "use client";
 
-import NumberFlow from "@number-flow/react";
+import { NumberTicker } from "@/components/ui/number-ticker";
 import { useCallback, useMemo, useState } from "react";
 import { HomeTitle } from "@/components/home/HomeTitle";
 import { cn } from "@/lib/cn";
@@ -118,7 +118,7 @@ export function ExampleDashboard() {
             >
               <p className="text-xs text-ink-muted-on-dark">{item.label}</p>
               <p className="mt-2 font-sans text-3xl font-semibold tabular-nums">
-                <NumberFlow value={item.value} />
+                <NumberTicker value={item.value} />
                 {item.suffix}
               </p>
             </div>
@@ -132,7 +132,7 @@ export function ExampleDashboard() {
               <div key={funnelLabels[i]}>
                 <div className="flex items-baseline justify-between text-xs text-ink-muted-on-dark">
                   <span>{funnelLabels[i]}</span>
-                  <NumberFlow value={value} className="tabular-nums" />
+                  <NumberTicker value={value} className="tabular-nums" />
                 </div>
                 <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
                   <FunnelBar

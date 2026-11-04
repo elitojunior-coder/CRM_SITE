@@ -2,7 +2,7 @@
 export function HeroSpotlight() {
   return (
     <div
-      className="pointer-events-none absolute inset-0 z-[1] overflow-hidden motion-reduce:opacity-60"
+      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden motion-reduce:opacity-60"
       aria-hidden
     >
       <div className="hero-beam hero-beam--left" />

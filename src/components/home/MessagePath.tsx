@@ -1,16 +1,8 @@
 "use client";
 
-import {
-  motion,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "motion/react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { HomeTitle } from "@/components/home/HomeTitle";
-import { cn } from "@/lib/cn";
-
+import { AnimatedBeam } from "@/components/ui/animated-beam";
 const stations = [
   {
     id: "whatsapp",
@@ -62,24 +54,33 @@ const stations = [
   },
 ] as const;
 
-export function MessagePath() {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
-  const [active, setActive] = useState(0);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 0.75", "end 0.3"],
-  });
-  const dotLeft = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const pathOffset = useTransform(scrollYProgress, [0, 1], [1, 0]);
+function StationNode({
+  innerRef,
+  label,
+}: {
+  innerRef: React.RefObject<HTMLDivElement | null>;
+  label: string;
+}) {
+  return (
+    <div
+      ref={innerRef}
+      className="mx-auto flex size-11 items-center justify-center rounded-full border border-accent/35 bg-surface-raised text-xs font-bold text-accent shadow-[0_0_24px_rgb(255_91_46/0.2)]"
+    >
+      {label}
+    </div>
+  );
+}
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (reduceMotion) return;
-    setActive(Math.min(stations.length - 1, Math.floor(v * stations.length)));
-  });
+export function MessagePath() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const ref0 = useRef<HTMLDivElement>(null);
+  const ref1 = useRef<HTMLDivElement>(null);
+  const ref2 = useRef<HTMLDivElement>(null);
+  const ref3 = useRef<HTMLDivElement>(null);
+  const refs = [ref0, ref1, ref2, ref3];
 
   return (
-    <div id="caminho-mensagem" ref={ref} className="scroll-mt-24 py-8 md:py-12">
+    <div id="caminho-mensagem" className="scroll-mt-24 py-8 md:py-12">
       <HomeTitle
         as="h2"
         text="O caminho da mensagem."
@@ -90,72 +91,42 @@ export function MessagePath() {
         Do primeiro contato ao vendedor com contexto — sem buraco no meio.
       </p>
 
-      <div className="relative mt-14 hidden md:block">
-        <svg
-          viewBox="0 0 1000 120"
-          className="h-28 w-full text-line"
-          aria-hidden
-        >
-          <path
-            d="M 40 60 H 960"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeDasharray="6 8"
-            opacity="0.45"
-          />
-          <motion.path
-            d="M 40 60 H 960"
-            fill="none"
-            stroke="url(#pathGlow)"
-            strokeWidth="3"
-            strokeLinecap="round"
-            pathLength={1}
-            strokeDasharray="1"
-            style={{ strokeDashoffset: reduceMotion ? 0 : pathOffset }}
-          />
-          <defs>
-            <linearGradient id="pathGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ff5b2e" stopOpacity="0.2" />
-              <stop offset="50%" stopColor="#ff5b2e" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#0e3b43" stopOpacity="0.5" />
-            </linearGradient>
-          </defs>
-        </svg>
-        {!reduceMotion ? (
-          <motion.span
-            className="absolute top-1/2 size-3 -translate-y-1/2 rounded-full bg-accent shadow-[0_0_24px_rgb(255_91_46/0.85)]"
-            style={{ left: dotLeft }}
-            aria-hidden
-          />
-        ) : null}
-        <div className="mt-2 grid grid-cols-4 gap-4">
+      <div ref={containerRef} className="relative mt-14 hidden md:block">
+        <div className="mb-6 grid grid-cols-4 gap-4">
           {stations.map((st, i) => (
+            <StationNode
+              key={st.id}
+              innerRef={refs[i]!}
+              label={String(i + 1)}
+            />
+          ))}
+        </div>
+        {refs.slice(0, -1).map((fromRef, i) => (
+          <AnimatedBeam
+            key={stations[i]!.id}
+            containerRef={containerRef}
+            fromRef={fromRef}
+            toRef={refs[i + 1]!}
+            curvature={20}
+            duration={4}
+            delay={i * 0.35}
+            pathColor="#e7e0d6"
+            pathWidth={2}
+            pathOpacity={0.35}
+            gradientStartColor="#ff5b2e"
+            gradientStopColor="#0e3b43"
+          />
+        ))}
+        <div className="mt-2 grid grid-cols-4 gap-4">
+          {stations.map((st) => (
             <div
               key={st.id}
-              className={cn(
-                "rounded-2xl border p-4 transition-[border-color,box-shadow] duration-300",
-                active === i
-                  ? "card-dark-glow border-accent/40 bg-surface-dark text-ink-on-dark shadow-[0_0_40px_rgb(255_91_46/0.12)]"
-                  : "border-line bg-surface-raised text-on-light",
-              )}
+              className="card-premium rounded-2xl border border-line p-4 text-on-light"
             >
-              <p
-                className={cn(
-                  "text-xs font-semibold uppercase tracking-[0.12em]",
-                  active === i ? "text-accent" : "text-ink-muted",
-                )}
-              >
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">
                 {st.title}
               </p>
-              <p
-                className={cn(
-                  "mt-2 text-sm",
-                  active === i ? "text-ink-muted-on-dark" : "text-ink-muted",
-                )}
-              >
-                {st.body}
-              </p>
+              <p className="mt-2 text-sm text-ink-muted">{st.body}</p>
               <div className="mt-4">{st.mini}</div>
             </div>
           ))}
@@ -166,32 +137,13 @@ export function MessagePath() {
         {stations.map((st, i) => (
           <li
             key={st.id}
-            className={cn(
-              "rounded-2xl border p-4",
-              active === i
-                ? "card-dark-glow border-accent/35 bg-surface-dark text-ink-on-dark"
-                : "border-line bg-surface-raised text-on-light",
-            )}
+            className="rounded-2xl border border-line bg-surface-raised p-4 text-on-light"
           >
             <span className="text-xs font-semibold text-accent">
               {String(i + 1).padStart(2, "0")}
             </span>
-            <h3
-              className={cn(
-                "mt-1 font-semibold",
-                active === i ? "text-ink-on-dark" : "text-ink",
-              )}
-            >
-              {st.title}
-            </h3>
-            <p
-              className={cn(
-                "mt-1 text-sm",
-                active === i ? "text-ink-muted-on-dark" : "text-ink-muted",
-              )}
-            >
-              {st.body}
-            </p>
+            <h3 className="mt-1 font-semibold text-ink">{st.title}</h3>
+            <p className="mt-1 text-sm text-ink-muted">{st.body}</p>
             <div className="mt-3">{st.mini}</div>
           </li>
         ))}

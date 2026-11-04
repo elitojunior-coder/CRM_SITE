@@ -1,8 +1,10 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useCallback } from "react";
 import { HomeTitle } from "@/components/home/HomeTitle";
+import { BentoGrid } from "@/components/ui/bento-grid";
+import { BorderBeam } from "@/components/ui/border-beam";
+import { MagicCard } from "@/components/ui/magic-card";
 import { cn } from "@/lib/cn";
 
 const items = [
@@ -10,13 +12,13 @@ const items = [
     title: "Áudio virou texto",
     desc: "O cliente fala; a IA entende e continua o fluxo.",
     key: "audio",
-    span: "lg:col-span-2 lg:row-span-2",
+    span: "md:col-span-2 md:row-span-2",
   },
   {
     title: "Card no funil",
     desc: "Cada conversa vira etapa, dono e próximo passo.",
     key: "funnel",
-    span: "lg:col-span-1 lg:row-span-2",
+    span: "md:col-span-1 md:row-span-2",
   },
   {
     title: "Resumo pronto",
@@ -101,7 +103,14 @@ function MiniVisual({ kind }: { kind: (typeof items)[number]["key"] }) {
             animate={
               reduceMotion
                 ? undefined
-                : { opacity: [0.4, 1, 1], clipPath: ["inset(0 100% 0 0)", "inset(0 0 0 0)", "inset(0 0 0 0)"] }
+                : {
+                    opacity: [0.4, 1, 1],
+                    clipPath: [
+                      "inset(0 100% 0 0)",
+                      "inset(0 0 0 0)",
+                      "inset(0 0 0 0)",
+                    ],
+                  }
             }
             transition={{ repeat: Infinity, duration: 4, repeatDelay: 0.5 }}
           >
@@ -162,13 +171,6 @@ function MiniVisual({ kind }: { kind: (typeof items)[number]["key"] }) {
 }
 
 export function BentoFeatures() {
-  const onMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    card.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
-    card.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
-  }, []);
-
   return (
     <div id="funcionalidades">
       <HomeTitle
@@ -177,26 +179,38 @@ export function BentoFeatures() {
         accentWords={["venda"]}
         className="text-3xl md:text-5xl"
       />
-      <div className="mt-10 grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-4">
+      <BentoGrid className="mt-10 auto-rows-[minmax(180px,auto)] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-4">
         {items.map((item) => (
-          <article
+          <MagicCard
             key={item.key}
-            onMouseMove={onMove}
+            gradientFrom="#ff5b2e"
+            gradientTo="#0e3b43"
+            gradientColor="rgb(255 91 46 / 0.08)"
+            gradientOpacity={0.65}
             className={cn(
-              "card-premium spotlight-card flex flex-col rounded-2xl p-5 transition-shadow hover:shadow-lg focus-within:shadow-lg",
+              "card-premium rounded-2xl bg-surface-raised shadow-sm",
               item.span,
             )}
           >
-            <MiniVisual kind={item.key} />
-            <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-ink">
-              {item.title}
-            </h3>
-            <p className="mt-2 text-base leading-relaxed text-ink-muted">
-              {item.desc}
-            </p>
-          </article>
+            <article className="relative flex h-full flex-col rounded-[inherit] p-5">
+              <BorderBeam
+                size={120}
+                duration={8}
+                colorFrom="#ff5b2e"
+                colorTo="#0e3b43"
+                borderWidth={1.5}
+              />
+              <MiniVisual kind={item.key} />
+              <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-ink">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-base leading-relaxed text-ink-muted">
+                {item.desc}
+              </p>
+            </article>
+          </MagicCard>
         ))}
-      </div>
+      </BentoGrid>
     </div>
   );
 }

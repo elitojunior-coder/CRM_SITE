@@ -17,6 +17,7 @@ import {
   ChatBubble,
   WhatsAppPhoneShell,
 } from "@/components/home/WhatsAppPhoneShell";
+import { Iphone } from "@/components/ui/iphone";
 import { cn } from "@/lib/cn";
 
 type ChatLine =
@@ -167,11 +168,17 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
   };
 
   useEffect(() => {
-    queueAutoDemoRef.current();
+    const seg = demoScripts[0]!;
+    setSegment(seg);
+    resetConversation();
+    const kickoff = window.setTimeout(() => {
+      void runMessageRef.current(seg.quickMessages[0]!);
+    }, reduceMotion ? 0 : 650);
     return () => {
+      window.clearTimeout(kickoff);
       if (idleRef.current) clearTimeout(idleRef.current);
     };
-  }, [reduceMotion]);
+  }, [reduceMotion, resetConversation]);
 
   useEffect(() => {
     resetConversation();
@@ -239,35 +246,37 @@ export function HeroInteractiveDemo({ className }: { className?: string }) {
 
   return (
     <div className={cn("relative flex flex-col items-center gap-3", className)}>
-      <div className="flex w-full max-w-[640px] items-start justify-center gap-4 lg:gap-6">
-        <WhatsAppPhoneShell
-          size="hero"
-          name={`Demo · ${segment.label}`}
-          status="online · IA roteirizada"
-          footer={footer}
-        >
-          {lines.map((line) =>
-            line.role === "slot" ? (
-              <ChatBubble key={line.id} side="in" time="agora" ticks>
-                <span className="font-medium text-accent">{line.text}</span>
+      <div className="flex w-full max-w-[640px] items-start justify-center gap-3 lg:gap-4">
+        <Iphone className="mx-auto w-[min(100%,268px)] max-w-[268px] drop-shadow-[0_32px_64px_rgb(0_0_0/0.45)] lg:w-[272px]">
+          <WhatsAppPhoneShell
+            size="hero"
+            name={`Demo · ${segment.label}`}
+            status="online · IA roteirizada"
+            footer={footer}
+          >
+            {lines.map((line) =>
+              line.role === "slot" ? (
+                <ChatBubble key={line.id} side="in" time="agora" ticks>
+                  <span className="font-medium text-accent">{line.text}</span>
+                </ChatBubble>
+              ) : (
+                <ChatBubble
+                  key={line.id}
+                  side={line.role === "user" ? "out" : "in"}
+                  time="agora"
+                  ticks={line.role === "user"}
+                >
+                  {line.text}
+                </ChatBubble>
+              ),
+            )}
+            {typing ? (
+              <ChatBubble side="in" time="…">
+                <span className="text-on-light text-ink-subtle">digitando…</span>
               </ChatBubble>
-            ) : (
-              <ChatBubble
-                key={line.id}
-                side={line.role === "user" ? "out" : "in"}
-                time="agora"
-                ticks={line.role === "user"}
-              >
-                {line.text}
-              </ChatBubble>
-            ),
-          )}
-          {typing ? (
-            <ChatBubble side="in" time="…">
-              <span className="text-on-light text-ink-subtle">digitando…</span>
-            </ChatBubble>
-          ) : null}
-        </WhatsAppPhoneShell>
+            ) : null}
+          </WhatsAppPhoneShell>
+        </Iphone>
         <FunnelCard chips={chips} slot={slot} pulseKey={chipPulse} />
       </div>
       <p className="max-w-md text-center text-xs leading-relaxed text-ink-muted-on-dark">
