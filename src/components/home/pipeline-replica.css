@@ -1,0 +1,32 @@
+@keyframes pipeline-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.03);
+  }
+}
+
+[data-pipeline-pulse="new-message"] {
+  animation: pipeline-pulse 1.4s ease-in-out infinite;
+}
+
+[data-pipeline-pulse="ai-typing"] {
+  animation: pipeline-pulse 1.8s ease-in-out infinite;
+}
+
+@media (max-width: 767px) {
+  .pipeline-mobile-clip {
+    clip-path: inset(0 58% 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-pipeline-pulse="new-message"],
+  [data-pipeline-pulse="ai-typing"] {
+    animation: none;
+  }
+}
