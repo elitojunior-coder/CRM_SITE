@@ -1,13 +1,13 @@
 [
   {
     "file": "antes-depois-1440.png",
-    "diffRatio": 0.0059998713164328915,
-    "mismatchedPixels": 5968
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "antes-depois-375.png",
-    "diffRatio": 0.0018966201854576882,
-    "mismatchedPixels": 812
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "calculadora-1440.png",
@@ -21,8 +21,8 @@
   },
   {
     "file": "caminho-mensagem-1440.png",
-    "diffRatio": 0,
-    "mismatchedPixels": 0
+    "diffRatio": 0.00008484753550543024,
+    "mismatchedPixels": 52
   },
   {
     "file": "caminho-mensagem-375.png",
@@ -41,8 +41,8 @@
   },
   {
     "file": "faq-1440.png",
-    "diffRatio": 0.00777128764278297,
-    "mismatchedPixels": 11974
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "faq-375.png",
@@ -61,8 +61,8 @@
   },
   {
     "file": "funcionalidades-1440.png",
-    "diffRatio": 0.007817083263493127,
-    "mismatchedPixels": 11939
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "funcionalidades-375.png",
@@ -81,8 +81,8 @@
   },
   {
     "file": "segmentos-1440.png",
-    "diffRatio": 0.0050754762673555056,
-    "mismatchedPixels": 5030
+    "diffRatio": 0,
+    "mismatchedPixels": 0
   },
   {
     "file": "segmentos-375.png",

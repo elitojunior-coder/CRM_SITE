@@ -88,7 +88,7 @@ export function BeforeAfter() {
               Depois
             </p>
             <p className="mt-4 font-sans text-5xl font-semibold tabular-nums tracking-tight text-accent md:text-7xl lg:text-8xl">
-              4 segundos
+              15 segundos
             </p>
             <p className="mt-3 text-lg text-ink-muted-on-dark">
               resposta pronta · agenda sugerida
@@ -101,7 +101,7 @@ export function BeforeAfter() {
                 Tenho 17h ou 18h30. Qual prefere? Confirmo na agenda em seguida.
               </div>
               <p className="mt-4 text-center text-xs font-medium text-accent">
-                respondido em 4 segundos
+                respondido em 15 segundos
               </p>
             </div>
           </motion.div>
