@@ -3,6 +3,7 @@ import { CurrentYear } from "@/components/layout/CurrentYear";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { brand } from "@/config/brand";
 import { brandField, productNameOrNull, productSloganDisplay } from "@/lib/brand-display";
+import { legalCompany, legalFieldHasPlaceholder } from "@/lib/legal/company";
 import { TextLink } from "@/components/ui/TextLink";
 
 const legalLinks = [
@@ -11,7 +12,12 @@ const legalLinks = [
   { href: "/cookies", label: "Cookies" },
   { href: "/lgpd", label: "Canal LGPD" },
   { href: "/suboperadores", label: "Suboperadores" },
+  { href: "/seguranca", label: "Segurança" },
 ];
+
+function legalDisplay(value: string, fallback: string): string {
+  return legalFieldHasPlaceholder(value) ? fallback : value;
+}
 
 export function Footer() {
   return (
@@ -28,14 +34,24 @@ export function Footer() {
             {productSloganDisplay()}
           </p>
           <p className="mt-6 text-xs leading-relaxed text-ink-muted">
-            {brand.company.razaoSocial}
-            {brandField(brand.company.cnpj) ? (
+            {legalDisplay(legalCompany.razaoSocial, brand.company.razaoSocial)}
+            {!legalFieldHasPlaceholder(legalCompany.cnpj) ? (
+              <>
+                <br />
+                CNPJ {legalCompany.cnpj}
+              </>
+            ) : brandField(brand.company.cnpj) ? (
               <>
                 <br />
                 CNPJ {brandField(brand.company.cnpj)}
               </>
             ) : null}
-            {brandField(brand.company.endereco) || brandField(brand.company.cidade) ? (
+            {!legalFieldHasPlaceholder(legalCompany.endereco) ? (
+              <>
+                <br />
+                {legalCompany.endereco}
+              </>
+            ) : brandField(brand.company.endereco) || brandField(brand.company.cidade) ? (
               <>
                 <br />
                 {[brandField(brand.company.endereco), brandField(brand.company.cidade)]
@@ -74,11 +90,23 @@ export function Footer() {
             {brandField(brand.contact.telefone) ? (
               <li>Telefone: {brandField(brand.contact.telefone)}</li>
             ) : null}
-            {brandField(brand.lgpd.encarregadoNome) ||
+            {!legalFieldHasPlaceholder(legalCompany.emailEncarregado) ||
+            brandField(brand.lgpd.encarregadoNome) ||
             brandField(brand.lgpd.encarregadoEmail) ? (
               <li>
                 Encarregado de dados: {brandField(brand.lgpd.encarregadoNome)}
-                {brandField(brand.lgpd.encarregadoEmail) ? (
+                {!legalFieldHasPlaceholder(legalCompany.emailEncarregado) ? (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a
+                      className="text-ink underline underline-offset-4 hover:text-accent"
+                      href={`mailto:${legalCompany.emailEncarregado}`}
+                    >
+                      {legalCompany.emailEncarregado}
+                    </a>
+                  </>
+                ) : brandField(brand.lgpd.encarregadoEmail) ? (
                   <>
                     {" "}
                     ·{" "}
@@ -112,7 +140,8 @@ export function Footer() {
       <div className="border-t border-line/80">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-5 text-xs text-ink-muted md:flex-row md:items-center md:justify-between md:px-8">
           <p>
-            © <CurrentYear /> {brand.company.razaoSocial}. Todos os direitos reservados.
+            © <CurrentYear /> {legalDisplay(legalCompany.razaoSocial, brand.company.razaoSocial)}.
+            Todos os direitos reservados.
           </p>
           <p>
             Dados tratados conforme a LGPD ·{" "}

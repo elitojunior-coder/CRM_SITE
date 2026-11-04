@@ -529,3 +529,22 @@ body {
     @apply font-sans;
   }
 }
+
+.legal-prose {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.legal-prose strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.legal-prose a {
+  text-underline-offset: 4px;
+}
+
+.legal-prose ul,
+.legal-prose ol {
+  padding-left: 1.25rem;
+}
