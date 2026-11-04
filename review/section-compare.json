@@ -21,8 +21,8 @@
   },
   {
     "file": "caminho-mensagem-1440.png",
-    "diffRatio": 0,
-    "mismatchedPixels": 0
+    "diffRatio": 0.0001354297201336675,
+    "mismatchedPixels": 83
   },
   {
     "file": "caminho-mensagem-375.png",

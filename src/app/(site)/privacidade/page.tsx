@@ -8,6 +8,7 @@ import { legalCompany, legalCompanyDisplayName } from "@/lib/legal/company";
 const toc = [
   { id: "papeis", label: "Papéis na LGPD" },
   { id: "dados", label: "Dados que coletamos" },
+  { id: "meta-whatsapp", label: "Dados da Meta (WhatsApp oficial)" },
   { id: "finalidades", label: "Finalidades e bases legais" },
   { id: "compartilhamento", label: "Compartilhamento" },
   { id: "internacional", label: "Transferência internacional" },
@@ -85,6 +86,30 @@ export default function PrivacidadePage() {
             funil e demais dados que o cliente ou o titular compartilha no atendimento.
           </li>
         </ul>
+      </LegalSection>
+
+      <LegalSection id="meta-whatsapp" title="Dados recebidos da Meta (API oficial do WhatsApp)">
+        {/* TODO(CANAL-1): confirmar este texto quando o canal oficial entrar no ar. */}
+        <p>
+          Quando o cliente conecta a API oficial do WhatsApp Business, recebemos da Meta
+          identificadores da conta empresarial, da conta do WhatsApp e do número de telefone, além
+          de um token de acesso necessário à integração. Por webhooks, recebemos mensagens,
+          mídias associadas e status de entrega ou leitura, conforme configurado.
+        </p>
+        <p>
+          Usamos esses dados exclusivamente para prestar o serviço contratado ao cliente (roteamento,
+          histórico de atendimento, automações e suporte técnico). O token de acesso permanece apenas
+          no servidor, com acesso restrito à equipe autorizada.
+        </p>
+        <p>
+          Ao desconectar a integração, deixamos de receber novos eventos da Meta; os dados já
+          tratados seguem os prazos de guarda descritos nesta política e podem ser excluídos conforme
+          pedido do controlador. Veja também{" "}
+          <Link href="/exclusao-de-dados" className="text-ink underline underline-offset-4">
+            Exclusão de dados
+          </Link>
+          .
+        </p>
       </LegalSection>
 
       <LegalSection id="finalidades" title="Finalidades e bases legais">

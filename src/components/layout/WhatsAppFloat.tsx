@@ -9,7 +9,6 @@ export function WhatsAppFloat() {
   const pathname = usePathname();
   const originOverride = useMemo(() => {
     if (pathname === "/") return "página inicial";
-    if (pathname === "/estilo") return "página de estilo";
     return `página ${pathname}`;
   }, [pathname]);
 

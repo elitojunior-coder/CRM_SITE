@@ -13,6 +13,7 @@ const legalPaths = [
   "/privacidade",
   "/cookies",
   "/lgpd",
+  "/exclusao-de-dados",
   "/suboperadores",
   "/seguranca",
 ] as const;

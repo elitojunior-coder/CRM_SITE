@@ -25,6 +25,8 @@ export const brand = {
     },
     emailComercial: "[PREENCHER]",
     emailSuporte: "[PREENCHER]",
+    /** Contato geral para dúvidas jurídicas e institucionais (termos, privacidade). */
+    emailContato: "[PREENCHER]",
     telefone: "[PREENCHER]",
     agendamentoUrl: "[PREENCHER]",
   },
@@ -39,6 +41,14 @@ export const brand = {
     cnpj: "[PREENCHER]",
     endereco: "[PREENCHER]",
     cidade: "[PREENCHER]",
+    /** Comarca eleita nos termos de uso. */
+    foro: "[PREENCHER]",
+  },
+
+  /** Vigência e metadados das políticas publicadas no site. */
+  legal: {
+    /** Data de vigência das políticas (ISO ou dd/mm/aaaa). */
+    dataVigencia: "04/11/2026",
   },
 
   social: {

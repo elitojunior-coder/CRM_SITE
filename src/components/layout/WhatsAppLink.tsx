@@ -14,7 +14,6 @@ import { cn } from "@/lib/cn";
 
 const PAGE_ORIGINS: Record<string, string> = {
   "/": "página inicial",
-  "/estilo": "página de estilo",
 };
 
 function subscribeNoop() {
